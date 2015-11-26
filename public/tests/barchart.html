@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script type="text/javascript">
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer",
+                    {
+                        title:{
+                            text: "A Combination Column Chart"
+
+                        },
+                        data: [
+                            {
+                                type: "stackedBar",
+                                legendText: "Underweight",
+                                showInLegend: "true",
+                                dataPoints: [
+                                    { x: 50, y: 18.5 },
+
+                                ]
+                            },
+                            {
+                                type: "stackedBar",
+                                legendText: "Standard",
+                                showInLegend: "true",
+                                dataPoints: [
+                                    { x: 50, y: 6.5 },
+
+
+                                ]
+                            },
+                            {
+                                type: "stackedBar",
+                                legendText: "Overweight",
+                                showInLegend: "true",
+                                dataPoints: [
+                                    { x: 50, y: 5 },
+
+
+                                ]
+                            },
+
+                            {
+                                type: "stackedBar",
+                                legendText: "Obese",
+                                showInLegend: "true",
+                                dataPoints: [
+                                    { x: 50, y: 10 },
+
+                                ]
+                            },
+
+
+
+                        ]
+                    });
+
+            chart.render();
+        }
+    </script>
+    <script type="text/javascript" src="js/canvasjs.min.js"></script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;">
+</div>
+</body>
+</html>

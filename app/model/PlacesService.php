@@ -1,0 +1,108 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of PlacesService
+ *
+ * @author lectern
+ */
+class PlacesService {
+
+    private $db;
+
+    public function __construct(\PDO $db) {
+        $this->db = $db;
+    }
+
+    public function getAllPlaces($customer_id) {
+
+        $query = "SELECT
+                    places.id AS place_id,
+                    places.name,
+                    places.address,
+                    places.suburb,
+                    places.postcode,
+                    tags.id as tag_id,
+                    tags.short
+                  FROM
+                    tags INNER JOIN
+                    places On places.tag_id = tags.id
+            Where
+                places.customer_id = :id";
+        try {
+            $stmnt = $this->db->prepare($query);
+            $stmnt->bindValue(':id', $customer_id, PDO::PARAM_INT);
+            $stmnt->execute();
+            $result = $stmnt->fetchAll();
+            $stmnt->closeCursor();
+
+            return $result;
+        } catch (PDOException $e) {
+            exit;
+        }
+    }
+
+    public function getTags() {
+
+        $query = "Select
+             tags.*
+            From
+                tags";
+
+        try {
+            $stmnt = $this->db->prepare($query);
+
+            $stmnt->execute();
+            $result = $stmnt->fetchAll();
+            $stmnt->closeCursor();
+            foreach ($result as $r) {
+                $tags[$r['id']] = $r['short'];
+            }
+            return $tags;
+            
+            foreach ($result as $r) {
+                $shorts[$r['short']] = $r['id'];
+            }
+            return $shorts;
+        } catch (PDOException $e) {
+            exit;
+        }
+    }
+    
+    public function getPlacesById($place_id) {
+
+        $query = "SELECT
+                    places.id AS place_id,
+                    places.name,
+                    places.address,
+                    places.suburb,
+                    places.postcode,
+                    tags.id as tag_id,
+                    tags.short
+                  FROM
+                    tags INNER JOIN
+                    places On places.tag_id = tags.id
+                  WHERE
+                    (places.id = :place_id) 
+              ";
+        try {
+            $stmnt = $this->db->prepare($query);
+            $stmnt->bindValue(':place_id', $place_id, PDO::PARAM_INT);
+            $stmnt->execute();
+            $result = $stmnt->fetch();
+            $stmnt->closeCursor();
+            return $result;
+        } catch (PDOException $e) {
+            Database::display_db_error($e->getMessage());
+            exit;
+        }
+    }
+    
+    
+
+}

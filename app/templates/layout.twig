@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <meta charset="utf-8">
+            <meta name="description" content="">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Top 5</title>
+            <link rel="stylesheet" href="css/style.css">
+            <link rel="stylesheet" href="css/bootstrap.css">
+            <link rel="author" href="humans.txt">
+        {% endblock %}
+    </head>
+    
+    <body>
+ <div id="wrapper">
+ <div id="page-content-wrapper">
+    <div class="container-fluid">
+        {% block flash_messages %}
+            {% if flash_messages.success %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-success" role="alert">
+                            {# display flash messages #}
+                            <ul>
+                                {% for msg in flash_messages.success %}
+                                    <li>{{ msg }}</li>
+                                    {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if flash_messages.danger %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" role="alert">
+                            {# display flash messages #}
+                            <ul>
+                                {% for msg in flash_messages.danger %}
+                                    <li>{{ msg }}</li>
+                                    {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+
+        <div class="row">
+            <div class="col-lg-12">
+                {% block content %}
+                    {# Main Page content #}
+                {% endblock %}
+
+            </div>
+        </div>
+    </div>
+ </div>
+ </div>
+</body>
+</html>

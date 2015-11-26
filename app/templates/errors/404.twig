@@ -1,0 +1,14 @@
+{% extends 'layout.twig' %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            {% block messgage %}
+                <h2>The page does not exists</h2>
+                <p>Please check the spelling and try again</p>
+            {% endblock %}
+            <p><a class="btn btn-danger btn-lg" href="{{ path_for('home') }}" role="button">
+                    Back to docs &raquo;</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

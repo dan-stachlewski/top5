@@ -1,0 +1,40 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+    <h2>User Profile</h2>
+    <h4>Please confirm your details</h4>
+
+    <form action="{{ path_for('user-edit') }}" method="post">
+
+        <div class="form-group {% if errors.user_name %}has-error{% endif %}">
+            <label class="control-label" for="user_name">User name:</label>
+            <input type="text" class="form-control" name="user_name" value="{{ user.user_name}}" disabled /> 
+            {% if errors.user_name %}<span class="help-block">{{ errors.user_name.0 }}</span>{% endif %}
+        </div>
+
+        <div class="form-group {% if errors.full_name %}has-error{% endif %}">
+            <label class="control-label" for="full_name">Full name:</label>
+            <input type="text" class="form-control" name="full_name" value="{{ user.full_name}}"  />
+            {% if errors.full_name %}<span class="help-block">{{ errors.full_name.0 }}</span>{% endif %}
+        </div>
+
+        <div class="form-group {% if errors.email %}has-error{% endif %}">
+            <label class="control-label" for="email">Email: </label>
+            <input type="text" class="form-control" name="email" value="{{ user.email}}"  />
+            {% if errors.email %}<span class="help-block">{{ errors.email.0 }}</span>{% endif %}
+        </div>
+
+        <label class="control-label" for="password">Password: </label>
+        <a class="btn btn-default" href="{{ path_for('user-password-change') }}">Change Password</a>
+
+        <hr>
+
+        <input type="hidden" name="csrf_name" value="{{ csrf.name }}">
+        <input type="hidden" name="csrf_value" value="{{ csrf.value }}">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-default" href="{{ path_for('docs-home') }}">Cancel</a>
+
+    </form>
+
+{% endblock %}

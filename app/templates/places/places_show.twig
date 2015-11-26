@@ -1,0 +1,47 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <h2>Place Information</h2>
+    </div>
+
+    <div class="row">
+            <img src="{{ base_url()}}/images/anonymous.png">
+    </div>
+    <div class="row">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Place Name:</td>
+                    <td>{{ place.name }}</td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td>{{ place.address }}</td>
+                </tr>
+                <tr>
+                    <td>Suburb:</td>
+                    <td>{{ place.suburb }}</td>
+                </tr>
+                <tr>
+                    <td>Postcode:</td>
+                    <td>{{ place.postcode }}</td>
+                </tr>
+                <tr>
+                    <td>Tag Id:</td>
+                    <td>{{ place.short }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a class="btn btn-success" href="{{ path_for('places-all') }}">Browse All Users</a>
+
+{% endblock %}

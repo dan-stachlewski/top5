@@ -1,0 +1,46 @@
+{% extends 'md_document.twig' %}
+
+{% block content %}
+
+    <h1>Calculate your BMRx</h1>
+    <hr>
+    <form action="{{ path_for('bmrx') }}" method="post">
+
+        <div class="control-group">
+            <div class="controls">
+                <label class="radio">
+                    <input type="radio" name="gender" value="female" checked>Female
+                </label>
+                <label class="radio">
+                    <input type="radio" name="gender" value="male">Male</label>
+            </div>
+            {% if errors.gender %}<span class="help-block">{{ errors.gender.0 }}</span>{% endif %}
+        </div>
+
+
+
+        <div class="form-group {% if errors.weight %}has-error{% endif %}">
+            <label class="control-label" for="weight"> What is your weight(kg)?</label>
+            <input type="text" class="form-control" name="weight" value="{{ bmr.weight }}"/>
+            {% if errors.weight %}<span class="help-block">{{ errors.weight.0 }}</span>{% endif %}
+        </div>
+
+        <div class="form-group {% if errors.height %}has-error{% endif %}">
+            <label class="control-label" for="height"> What is your height(m)?</label>
+            <input type="text" class="form-control" name="height" value="{{ bmr.height }}"/>
+            {% if errors.height %}<span class="help-block">{{ errors.height.0 }}</span>{% endif %}
+        </div>
+
+        <div class="form-group {% if errors.age %}has-error{% endif %}">
+            <label class="control-label" for="age"> What is your age(years)?</label>
+            <input type="text" class="form-control" name="age" value="{{ bmr.age }}"/>
+            {% if errors.age %}<span class="help-block">{{ errors.age.0 }}</span>{% endif %}
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-default" href="{{ path_for('docs-home') }}">Cancel</a>
+
+    </form>
+
+{% endblock %}

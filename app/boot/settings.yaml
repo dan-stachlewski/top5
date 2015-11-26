@@ -1,0 +1,16 @@
+settings :
+  debug : true
+  displayErrorDetails : true;
+
+view  :
+ template_path : 'app/templates'
+ twig :
+    cache : 'cache/twig'
+    debug : true
+
+db  :
+    driver    : 'mysql'
+    host       : 'localhost'
+    dbname     : 'top5'
+    username   : 'root'
+    password   : 'password'
