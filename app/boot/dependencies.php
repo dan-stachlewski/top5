@@ -1,11 +1,12 @@
 <?php
-
+// Defines the CONTAINER requested in the MODEL files
 $container = $app->getContainer();
 
-//set up twig view
-$container['view'] = function ($c) use($conf) {
-    $twig = $conf->get('view.twig');
-    $template_path = $conf->get('view.template_path');
+// Set Up the TWIG VIEW
+//$configuration comes from index.php and uses the YAMEL file for SETTINGS
+$container['view'] = function ($c) use($configuration) {
+    $twig = $configuration->get('view.twig');
+    $template_path = $configuration->get('view.template_path');
 
     $view = new \Slim\Views\Twig($template_path, $twig);
 
@@ -48,8 +49,8 @@ $c['errorHandler'] = function ($c) {
     };
 };
 
-$container['db'] = function ($c) use($conf, $app) {
-    $db = $conf->get('db');
+$container['db'] = function ($c) use($configuration, $app) {
+    $db = $configuration->get('db');
 
     //if (!$db) return null;
     if ($db['driver'] == 'mysql') {
