@@ -40,9 +40,33 @@
                 </tr>
             </tbody>
         </table>
+        
+        <!-- 
+            ***
+             * Need to add 
+               - Google Map of the Place Location
+               - Auto Retrieve the:
+                - latitude
+                - longditude
+             * based on the PostCode <-- need to confirm
+             * Populate the:
+                - latitude
+                - longitude
+             * automatically
+         -->
+            <div class="well">
 
-    <a class="btn btn-primary" href="{{ path_for('places-all') }}">Browse All Users</a>
-    <a class="btn btn-success" href="{{ path_for('places-edit', {'id':place.place_id})}}">Edit</a>
+                <h2>{{ place.name }} Google Map:</h2>
+                
+                <!-- Google Map goes here... -->
+
+            </div>
+
+            <div class="well">
+                <a class="btn btn-primary" href="{{ path_for('places-all') }}">Browse All Users</a>
+                <a class="btn btn-success" href="{{ path_for('places-edit', {'id':place.place_id})}}">Edit</a>
+    
+            </div>
     </div>
 
 {% endblock %}
