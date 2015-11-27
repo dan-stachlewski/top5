@@ -2,18 +2,19 @@
 // All file paths relative to root
 chdir(dirname(__DIR__));
 
+//Require the SLIM V 3.0 FRAMEWORK - *** without below require nothing happens***
 require 'vendor/autoload.php';
 session_start();
 
-//simulate customer login
+// Simulate Customer Login *** @ the beginning so we can RETRIEVE & DISPLAY places ***
 $_SESSION['customer_id'] = 1;
 
 
 use Noodlehaus\Config;
-$conf = Config::load('app/boot/settings.yaml');
-$settings = $conf->get('settings', []);
+$configuration = Config::load('app/boot/settings.yaml');
+$settings = $configuration->get('settings', []);
 
-// Instantiate Slim
+// Instantiate the SLIM V 3.0 FRAMEWORK
 $app = new \Slim\App(['settings'=>$settings]);
 
 
@@ -26,4 +27,5 @@ require 'app/boot/middleware.php';
 // Register the routes
 require 'app/src/routes.php';
 
+// Required to RUN the application *** ALWAYS @ END of the FILE ***
 $app->run();
