@@ -33,7 +33,7 @@
                             <td>    
                                 <a class="btn btn-info" href="{{ path_for('places-show', {'id':place.place_id})}}">Show</a>
                                 <a class="btn btn-success" href="{{ path_for('places-edit', {'id':place.place_id})}}">Edit</a>
-                                <a class="btn btn-danger" href="">Delete</a>
+                                <a class="btn btn-danger" href=""{{ path_for('places-delete', {'id':place.place_id})}}">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}
