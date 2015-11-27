@@ -102,7 +102,31 @@ class PlacesService {
             exit;
         }
     }
-    
+
+    public function updatePlace($place) {
+        //ddd($place);
+        $query = "UPDATE
+                    places 
+                SET name=:name,
+                    address=:address,
+                    postcode=:postcode,
+                    suburb=:suburb,
+                    tag_id=:tag_id
+                WHERE 
+                    (places.id = :place_id )";
+        try {
+            $stmnt = $this->db->prepare($query);
+            $stmnt->bindValue(':place_id', $place['place_id'], PDO::PARAM_INT);
+            $stmnt->bindValue(':name', $place['name'], PDO::PARAM_STR);
+            $stmnt->bindValue(':address', $place['address'], PDO::PARAM_STR);
+            $stmnt->bindValue(':postcode', $place['postcode'], PDO::PARAM_STR);
+            $stmnt->bindValue(':suburb', $place['suburb'], PDO::PARAM_STR);
+            $stmnt->bindValue(':tag_id', $place['tag_id'], PDO::PARAM_INT);
+            $r = $stmnt->execute();
+        } catch (PDOException $e) {
+            Database::display_db_error($e->getMessage());
+        }
+    }
     
 
 }
