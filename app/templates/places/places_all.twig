@@ -33,7 +33,7 @@
                             <td>    
                                 <a class="btn btn-info" href="{{ path_for('places-show', {'id':place.place_id})}}">Show</a>
                                 <a class="btn btn-success" href="{{ path_for('places-edit', {'id':place.place_id})}}">Edit</a>
-                                <a class="btn btn-danger" href=""{{ path_for('places-delete', {'id':place.place_id})}}">Delete</a>
+                                <a class="btn btn-danger" href="{{ path_for('places-delete', {'id':place.place_id})}}">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -42,7 +42,7 @@
             </table>
 
             <div class="well">
-                <a class="btn btn-danger" href="{{ path_for('places-add')}}">New Place</a>
+                <a class="btn btn-primary" href="{{ path_for('places-add')}}">New Place</a>
             </div>
         </div>
     {% else %}
