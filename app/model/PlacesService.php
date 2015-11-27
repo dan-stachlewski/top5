@@ -29,11 +29,13 @@ class PlacesService {
                     places.postcode,
                     tags.id as tag_id,
                     tags.short
-                  FROM
-                    tags INNER JOIN
+                FROM
+                    tags 
+                INNER JOIN
                     places On places.tag_id = tags.id
-            Where
-                places.customer_id = :id";
+                WHERE
+                    places.customer_id = :id
+                ";
         try {
             $stmnt = $this->db->prepare($query);
             $stmnt->bindValue(':id', $customer_id, PDO::PARAM_INT);
@@ -88,7 +90,7 @@ class PlacesService {
                     tags INNER JOIN
                     places On places.tag_id = tags.id
                   WHERE
-                    (places.id = :place_id) 
+                    (places.id = :place_id)
               ";
         try {
             $stmnt = $this->db->prepare($query);
@@ -103,8 +105,8 @@ class PlacesService {
         }
     }
 
-    public function addPlace($place_id) {
-        $query = "INSERT INTO users 
+    public function addPlace($place) {
+        $query = "INSERT INTO places 
               (name, address, postcode, suburb, tag_id, customer_id) 
               VALUES 
               (:name, :address, :postcode, :suburb, :tag_id, :customer_id)";
@@ -114,8 +116,8 @@ class PlacesService {
             $stmnt->bindValue(':address', $place['address'], PDO::PARAM_STR);
             $stmnt->bindValue(':postcode', $place['postcode'], PDO::PARAM_INT);
             $stmnt->bindValue(':suburb', $place['suburb'], PDO::PARAM_STR);
-            $stmnt->bindValue(':tag_id', $user['tag_id'], PDO::PARAM_INT);
-            $stmnt->bindValue(':customer_id', $user['customer_id'], PDO::PARAM_INT);
+            $stmnt->bindValue(':tag_id', $place['tag_id'], PDO::PARAM_INT);
+            $stmnt->bindValue(':customer_id', $place['customer_id'], PDO::PARAM_INT);
             $r = $stmnt->execute();
         } catch (PDOException $e) {
 
