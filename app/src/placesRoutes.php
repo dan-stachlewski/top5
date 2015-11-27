@@ -133,3 +133,35 @@ $app->map(['GET', 'POST'], 'places/edit/{id:[\d]*}', function ($request, $respon
                 ]
         ]);
     })->setName('places-edit');
+    
+    $app->map(['GET', 'POST'], 'places/delete/{id:[\d]*}', function ($request, $response, $args) {
+        //$place = [];
+        $place_id = (int) $args['id'];
+        //ddd($id);
+        $flash_messages = $this->flash->getMessages();
+        //$userService = new AuthService();
+        $place = $this->places->getPlacesById($place_id);
+
+        $OK_link = $this->router->pathFor('places-delete', ['id' => $place_id]);
+
+        if ($request->isPost()) {
+            $this->places->deletePlace($place_id);
+            $this->flash->addMessage('success', 'Place has been successfully deleted');
+            return $response->withRedirect($this->router->pathFor('places-all'));
+        }
+
+        return $this->view->render($response, 'places/places_delete.twig', [
+                    'place' => $place,
+                    'OK_link' => $OK_link,
+                    'flash_messages' => $flash_messages,
+                   // 'userLogged' => isset($_SESSION['user_id']), MOVED TO GLOBAL SECTION
+                    'csrf' => [
+                        'name' => $request->getAttribute('csrf_name'),
+                        'value' => $request->getAttribute('csrf_value'),
+                    ]
+        ]);
+    })->setName('places-delete');
+    
+    
+    
+    
