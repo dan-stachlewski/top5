@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="row">
-        <h2>Place Information</h2>
+        <h2>{{ place.name }} Information</h2>
     </div>
 
     <div class="row">
@@ -40,8 +40,9 @@
                 </tr>
             </tbody>
         </table>
-    </div>
 
-    <a class="btn btn-success" href="{{ path_for('places-all') }}">Browse All Users</a>
+    <a class="btn btn-primary" href="{{ path_for('places-all') }}">Browse All Users</a>
+    <a class="btn btn-success" href="{{ path_for('places-edit', {'id':place.place_id})}}">Edit</a>
+    </div>
 
 {% endblock %}
