@@ -1,14 +1,16 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
-
-    <h2>Add new place</h2>
-    <h4>Please enter new place  details</h4>
+    
+    <img src="{{ base_url()}}/images/generic-place-small.png">
+    
+    <h2>Add New Place</h2>
+    <h4>Please enter details for the 'New' Place</h4>
 
     <form action="{{ path_for('places-add') }}" method="post">
 
         <div class="form-group {% if errors.name %}has-error{% endif %}">
-            <label class="control-label" for="name">Place name:</label>
+            <label class="control-label" for="name">Name:</label>
             <input type="text" class="form-control" name="name" value="{{ place.name}}"  />
             {% if errors.name %}<span class="help-block">{{ errors.name.0 }}</span>{% endif %}
         </div>
@@ -18,9 +20,20 @@
             <input type="text" class="form-control" name="address" value="{{ place.address}}"  />
             {% if errors.address %}<span class="help-block">{{ errors.address.0 }}</span>{% endif %}
         </div>
-
         
-
+        <div class="form-group {% if errors.suburb %}has-error{% endif %}">
+            <label class="control-label" for="suburb">Suburb:</label>
+            <input type="text" class="form-control" name="suburb" value="{{ place.suburb}}"  />
+            {% if errors.suburb %}<span class="help-block">{{ errors.suburb.0 }}</span>{% endif %}
+        </div>
+        
+        <div class="form-group {% if errors.postcode %}has-error{% endif %}">
+            <label class="control-label" for="postcode">Postcode:</label>
+            <input type="text" class="form-control" name="postcode" value="{{ place.postcode}}"  />
+            {% if errors.postcode %}<span class="help-block">{{ errors.postcode.0 }}</span>{% endif %}
+        </div>
+        
+        <!-- This takes the tag_id and converts the output to category that is related to the tag_id -->
         <div class="form-group">
             <label for="tag_id">Select Category:</label>
             <select class="form-control" name="tag_id">
