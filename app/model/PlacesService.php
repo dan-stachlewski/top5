@@ -103,6 +103,30 @@ class PlacesService {
         }
     }
 
+    public function addPlace($place_id) {
+        $query = "INSERT INTO users 
+              (name, address, postcode, suburb, tag_id, customer_id) 
+              VALUES 
+              (:name, :address, :postcode, :suburb, :tag_id, :customer_id)";
+        try {
+            $stmnt = $this->db->prepare($query);
+            $stmnt->bindValue(':name', $place['name'], PDO::PARAM_STR);
+            $stmnt->bindValue(':address', $place['address'], PDO::PARAM_STR);
+            $stmnt->bindValue(':postcode', $place['postcode'], PDO::PARAM_INT);
+            $stmnt->bindValue(':suburb', $place['suburb'], PDO::PARAM_STR);
+            $stmnt->bindValue(':tag_id', $user['tag_id'], PDO::PARAM_INT);
+            $stmnt->bindValue(':customer_id', $user['customer_id'], PDO::PARAM_INT);
+            $r = $stmnt->execute();
+        } catch (PDOException $e) {
+
+            if ($e->getCode() == 23000) {
+                Database::display_db_error("DATA DUPLICATION: " . $e->getMessage());
+            } else {
+                Database::display_db_error($e->getMessage());
+            }
+        }
+    }
+    
     public function updatePlace($place) {
         //ddd($place);
         $query = "UPDATE
