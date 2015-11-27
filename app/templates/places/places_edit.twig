@@ -1,0 +1,53 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+    <h2>Edit {{ place.name }}</h2>
+    <h4>Please 'Update' the details for {{ place.name }}</h4>
+
+    <form action="{{ path_for('places-edit', {id: place.place_id}) }}" method="post">
+
+        <div class="form-group {% if errors.name %}has-error{% endif %}">
+            <label class="control-label" for="name">Name:</label>
+            <input type="text" class="form-control" name="name" value="{{ place.name }}" /> 
+            {% if errors.user_name %}<span class="help-block">{{ errors.user_name.0 }}</span>{% endif %}
+        </div>
+
+        <div class="form-group {% if errors.address %}has-error{% endif %}">
+            <label class="control-label" for="address">Address:</label>
+            <input type="text" class="form-control" name="address" value="{{ place.address }}"  />
+            {% if errors.address %}<span class="help-block">{{ errors.address.0 }}</span>{% endif %}
+        </div>
+
+        <div class="form-group {% if errors.suburb %}has-error{% endif %}">
+            <label class="control-label" for="suburb">Suburb:</label>
+            <input type="text" class="form-control" name="suburb" value="{{ place.suburb }}"  />
+            {% if errors.suburb %}<span class="help-block">{{ errors.suburb.0 }}</span>{% endif %}
+        </div>
+
+        <div class="form-group {% if errors.postcode %}has-error{% endif %}">
+            <label class="control-label" for="postcode">Postcode:</label>
+            <input type="text" class="form-control" name="postcode" value="{{ place.postcode }}"  />
+            {% if errors.postcode %}<span class="help-block">{{ errors.postcode.0 }}</span>{% endif %}
+        </div>
+
+        <!--  -->
+        <div class="form-group">
+            <label for="tag_id">Select Category:</label>
+            <select class="form-control" name="tag_id">
+                {% for idx,  tag in tags %}
+                    <option value="{{ idx }}" {%if tag == place.short %}selected{% endif %}>{{ tag }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <hr>
+
+        <input type="hidden" name="csrf_name" value="{{ csrf.name }}">
+        <input type="hidden" name="csrf_value" value="{{ csrf.value }}">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-default" href="{{ path_for('admin-users-all') }}">Cancel</a>
+
+    </form>
+
+{% endblock %}
