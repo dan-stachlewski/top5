@@ -37,17 +37,25 @@ $app->map(['GET', 'POST'], 'places/add', function ($request, $response, $args) {
         $place['name'] = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
         $place['address'] = filter_var($_POST['address'], FILTER_SANITIZE_STRING);
         $place['postcode'] = filter_var($_POST['postcode'], FILTER_SANITIZE_STRING);
+        $place['suburb'] = filter_var($_POST['suburb'], FILTER_SANITIZE_STRING);
         $place['tag_id'] = filter_var($_POST['tag_id'], FILTER_SANITIZE_NUMBER_INT);
         //Need customer_id so we know which PLACE belongs to which USER
         $place['customer_id'] = $_SESSION['customer_id'];
 
         $place_form = validateAddPlaceForm($place);
         
-        //ddd($place_form);
+        //ddd($place);
         //call add place
-        //redirect to places_all 
-                
-    }
+        //redirect to places_all
+            if ($place_form['is_valid']) {
+                $this->places->addPlace($place);
+                $this->flash->addMessage('success', 'Place details have been updated');
+                return $response->withRedirect($this->router->pathFor('places-all'));
+            } else {
+                $field_errors = $place_form['has_errors'];
+            }
+        }
+    
     return $this->view->render($response, 'places/places_add.twig', [
                 'place' => $place,
                 'tags' => $tags,
