@@ -128,5 +128,22 @@ class PlacesService {
         }
     }
     
+    public function deletePlace($place_id) {
+        $query = "DELETE
+             From
+                places
+              Where
+                (places.id = :place_id ) 
+              ";
+        try {
+            $stmnt = $this->db->prepare($query);
+            $stmnt->bindValue(':place_id', $place_id, PDO::PARAM_INT);
+            $stmnt->execute();
+            $stmnt->closeCursor();
+        } catch (PDOException $e) {
+            Database::display_db_error($e->getMessage());
+            exit;
+        }
+    }
 
 }
