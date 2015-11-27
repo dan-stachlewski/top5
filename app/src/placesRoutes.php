@@ -95,16 +95,16 @@ $app->map(['GET', 'POST'], 'places/edit/{id:[\d]*}', function ($request, $respon
         $flash_messages = $this->flash->getMessages();
         $tags = $this->places->getTags();
 
-        $place = $this->places->getPlacesById($place_id);
+        //$place = $this->places->getPlacesById($place_id);
 
         if ($request->isPost()) {
 
             $place['name'] = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
             $place['address'] = filter_var($_POST['address'], FILTER_SANITIZE_STRING);
+            $place['suburb'] = filter_var($_POST['suburb'], FILTER_SANITIZE_STRING);
             $place['postcode'] = filter_var($_POST['postcode'], FILTER_SANITIZE_STRING);
             $place['tag_id'] = filter_var($_POST['tag_id'], FILTER_SANITIZE_NUMBER_INT);
             //Need customer_id so we know which PLACE belongs to which USER
-            $place['customer_id'] = $_SESSION['customer_id'];
 
             $place_form = validateAddPlaceForm($place);
 
@@ -113,7 +113,7 @@ $app->map(['GET', 'POST'], 'places/edit/{id:[\d]*}', function ($request, $respon
             //redirect to places_all 
             
             if ($place_form['is_valid']) {
-                $this->auth->updatePlace($place_id);
+                $this->places->updatePlace($place);
                 $this->flash->addMessage('success', 'User details have been updated');
                 return $response->withRedirect($this->router->pathFor('places-all'));
             } else {
