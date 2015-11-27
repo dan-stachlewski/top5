@@ -88,5 +88,48 @@ return $this->view->render($response, 'places/places_show.twig', [
         ]);
 })->setName('places-show');
 
+$app->map(['GET', 'POST'], 'places/edit/{id:[\d]*}', function ($request, $response, $args) {
+        $place_id = (int) $args['id'];
+        //$place_id = 1;
+        $place = $this->places->getPlacesById($place_id);
+        $flash_messages = $this->flash->getMessages();
+        $tags = $this->places->getTags();
 
+        $place = $this->places->getPlacesById($place_id);
 
+        if ($request->isPost()) {
+
+            $place['name'] = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+            $place['address'] = filter_var($_POST['address'], FILTER_SANITIZE_STRING);
+            $place['postcode'] = filter_var($_POST['postcode'], FILTER_SANITIZE_STRING);
+            $place['tag_id'] = filter_var($_POST['tag_id'], FILTER_SANITIZE_NUMBER_INT);
+            //Need customer_id so we know which PLACE belongs to which USER
+            $place['customer_id'] = $_SESSION['customer_id'];
+
+            $place_form = validateAddPlaceForm($place);
+
+            //ddd($place_form);
+            //call add place
+            //redirect to places_all 
+            
+            if ($place_form['is_valid']) {
+                $this->auth->updatePlace($place_id);
+                $this->flash->addMessage('success', 'User details have been updated');
+                return $response->withRedirect($this->router->pathFor('places-all'));
+            } else {
+                $field_errors = $places_form['has_errors'];
+            }
+        }
+
+        return $this->view->render($response, 'places/places_edit.twig', [
+                'place' => $place,
+                'tags' => $tags,
+                'flash_messages' => $flash_messages,
+                //'errors' => $field_errors,
+                //'userLogged' => isset($_SESSION['user_id']),
+                'csrf' => [
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value'),
+                ]
+        ]);
+    })->setName('places-edit');
