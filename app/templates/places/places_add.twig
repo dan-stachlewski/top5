@@ -44,12 +44,12 @@
         </div>
 
         <hr>
-
-        <input type="hidden" name="csrf_name" value="{{ csrf.name }}">
-        <input type="hidden" name="csrf_value" value="{{ csrf.value }}">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a class="btn btn-default"  href="{{ path_for('places-all') }}">Cancel</a>
-
+        <div class="well">
+            <input type="hidden" name="csrf_name" value="{{ csrf.name }}">
+            <input type="hidden" name="csrf_value" value="{{ csrf.value }}">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a class="btn btn-default"  href="{{ path_for('places-all') }}">Cancel</a>
+        </div>
     </form>
 
 {% endblock %}
