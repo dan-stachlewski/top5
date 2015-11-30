@@ -21,52 +21,107 @@
             <link rel="author" href="humans.txt">
         {% endblock %}
     </head>
-    
+
     <body>
- <div id="wrapper">
- <div id="page-content-wrapper">
-    <div class="container-fluid">
-        {% block flash_messages %}
-            {% if flash_messages.success %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-success" role="alert">
-                            {# display flash messages #}
-                            <ul>
-                                {% for msg in flash_messages.success %}
-                                    <li>{{ msg }}</li>
-                                    {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            {% if flash_messages.danger %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-danger" role="alert">
-                            {# display flash messages #}
-                            <ul>
-                                {% for msg in flash_messages.danger %}
-                                    <li>{{ msg }}</li>
-                                    {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        {% endblock %}
+        <div id="wrapper">
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- ============ NAVBAR START ============ -->  
+                    <nav class="navbar navbar-default  ">
+                        <div class="navbar-header">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    {% block topnavbar %}
+                                        <div class="col-sm-3">
+                                            <a href="#menu-toggle" class="btn btn-default navbar-text" id="menu-toggle">Toggle Menu</a>
+                                        </div><!-- /.col-sm-3 -->
+                                        <div class="dropdown col-sm-4">
+                                            <button class="btn  btn-default dropdown-toggle navbar-text" type="button" data-toggle="dropdown">Calculators
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{{ path_for('bmi') }}">BMI</a></li>
+                                                <li><a href="{{ path_for('bmr') }}">BMR</a></li>
+                                            </ul>
+                                        </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                {% block content %}
-                    {# Main Page content #}
-                {% endblock %}
-
-            </div>
-        </div>
-    </div>
- </div>
- </div>
-</body>
+                                        <div class="dropdown col-sm-5">
+                                            <button class="btn  btn-default dropdown-toggle navbar-text" type="button"data-toggle="dropdown">User
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                {% if not userLogged %} 
+                                                    <li>
+                                                        <a href="{{ path_for('login') }}">Login</a>
+                                                    </li> 
+                                                    {% else %}  
+                                                    <li>
+                                                        <a href="{{ path_for('user-edit') }}">Profile</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path_for('logout') }}">Logout</a>
+                                                    </li> 
+                                                    {% if  isAdministrator %}
+                                                        <li class="divider"></li>
+                                                        <li>
+                                                            <a href="{{ path_for('admin-users-all') }}">Admin Dashboard</a>
+                                                        </li>
+                                                        {% endif %}
+                                                {% endif %}
+                                            </ul>
+                                        </div><!-- /.dropdown col-sm-5 -->
+                                    {% endblock %}
+                                </div><!-- /.row -->
+                            </div><!-- /.container-fluid -->
+                        </div> <!-- /.navbar-header -->
+                    </nav>
+                    <!-- ============ NAVBAR END ============ -->
+                    
+                    <!-- ============ FLASH MESSAGES START ============ --> 
+                    {% block flash_messages %}
+                        {% if flash_messages.success %}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-success" role="alert">
+                                        {# display flash messages #}
+                                        <ul>
+                                            {% for msg in flash_messages.success %}
+                                                <li>{{ msg }}</li>
+                                                {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if flash_messages.danger %}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-danger" role="alert">
+                                        {# display flash messages #}
+                                        <ul>
+                                            {% for msg in flash_messages.danger %}
+                                                <li>{{ msg }}</li>
+                                                {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+                    <!-- ============ FLASH MESSAGES END ============ --> 
+                    
+                    <!-- ============ MAIN CONTENT START ============ -->                     
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {% block content %}
+                                {# Main Page content #}
+                            {% endblock %}
+                        </div><!-- /.col-lg-12-->
+                    </div><!-- /.row-->
+                    <!-- ============ MAIN CONTENT END ============ -->
+                
+                </div><!-- /.container-fluid -->
+            </div><!-- /#page-content-wrapper -->
+        </div><!-- /#wrapper -->
+    </body>
 </html>
