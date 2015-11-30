@@ -24,6 +24,36 @@
 
     <body>
         <div id="wrapper">
+            
+            <!-- ============ SIDEBAR START ============ -->
+            <div id="sidebar-wrapper">
+                {% block navbar %}
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-brand">
+                            <a href="#">
+                                Get Slim with Slim
+                            </a>
+                        </li>
+                        {% for doc in docs %}
+                            <li>
+                                <a href="{{ path_for('docs', {fname : doc.slug}) }}"> {{ doc.fname }}</a>
+                            </li>
+                            {% if current_file == doc.fname and doc.anchors is not empty %}
+                                <ul>
+                                    {% for anchor in doc.anchors %}
+                                        <li>
+                                            <a href="#{{ anchor }}"> {{ anchor }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endblock %}
+            </div>
+            <!-- ============ SIDEBAR END ============ -->
+            
+            <!-- ============ MAIN PAGE CONTENT WRAPPER ============ -->
             <div id="page-content-wrapper">
                 <div class="container-fluid">
                     <!-- ============ NAVBAR START ============ -->  
@@ -40,8 +70,8 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="{{ path_for('bmi') }}">BMI</a></li>
-                                                <li><a href="{{ path_for('bmr') }}">BMR</a></li>
+                                                <li><a href=""></a></li>
+                                                <li><a href=""></a></li>
                                             </ul>
                                         </div>
 
@@ -52,19 +82,19 @@
                                             <ul class="dropdown-menu">
                                                 {% if not userLogged %} 
                                                     <li>
-                                                        <a href="{{ path_for('login') }}">Login</a>
+                                                        <a href="">Login</a>
                                                     </li> 
                                                     {% else %}  
                                                     <li>
-                                                        <a href="{{ path_for('user-edit') }}">Profile</a>
+                                                        <a href="">Profile</a>
                                                     </li>
                                                     <li>
-                                                        <a href="{{ path_for('logout') }}">Logout</a>
+                                                        <a href="">Logout</a>
                                                     </li> 
                                                     {% if  isAdministrator %}
                                                         <li class="divider"></li>
                                                         <li>
-                                                            <a href="{{ path_for('admin-users-all') }}">Admin Dashboard</a>
+                                                            <a href="">Admin Dashboard</a>
                                                         </li>
                                                         {% endif %}
                                                 {% endif %}
@@ -122,6 +152,21 @@
                 
                 </div><!-- /.container-fluid -->
             </div><!-- /#page-content-wrapper -->
+            <!-- ============ MAIN PAGE CONTENT WRAPPER ============ -->
+
+        <!-- ============ BOOTSTRAP JS INC NAVBAR TOGGLE START ============ -->
+            <script src="{{ base_url() }}/js/jquery.js"></script>
+            <!-- Bootstrap Core JavaScript -->
+            <script src="{{ base_url() }}/js/bootstrap.min.js"></script>
+            <!-- Menu Toggle Script -->
+            <script>
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
+            </script>
+        <!-- ============ BOOTSTRAP JS INC NAVBAR TOGGLED END ============ -->
+        
         </div><!-- /#wrapper -->
     </body>
 </html>
