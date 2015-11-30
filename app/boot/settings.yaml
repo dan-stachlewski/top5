@@ -14,3 +14,7 @@ db  :
     dbname     : 'top5'
     username   : 'root'
     password   : 'password'
+
+application:
+    home_path : 'home'
+    home_index_file : 'index.yaml'
