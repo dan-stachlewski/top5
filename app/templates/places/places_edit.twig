@@ -12,7 +12,7 @@
         <div class="form-group {% if errors.name %}has-error{% endif %}">
             <label class="control-label" for="name">Name:</label>
             <input type="text" class="form-control" name="name" value="{{ place.name }}" /> 
-            {% if errors.user_name %}<span class="help-block">{{ errors.user_name.0 }}</span>{% endif %}
+            {% if errors.name %}<span class="help-block">{{ errors.name.0 }}</span>{% endif %}
         </div>
 
         <div class="form-group {% if errors.address %}has-error{% endif %}">
