@@ -24,3 +24,13 @@ $app->get('/', function ($request, $response, $args) {
     return $response->write("HELLO top5");
 })->setName('home');
 
+$app->get('/test', function ($request, $response, $args) {
+    $this->view->render($response, 'navbar.twig', [
+        'home' => $this->toc
+    ]);
+});
+
+$app->get('/home/{slug}', function ($request, $response, $args) {
+    echo "You selected {$args['slug']}";
+});
+
