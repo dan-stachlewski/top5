@@ -16,5 +16,5 @@ db  :
     password   : 'password'
 
 application:
-    home_path : 'home'
-    home_index_file : 'index.yaml'
+    doc_path : 'home'
+    doc_index_file : 'index.yaml'
