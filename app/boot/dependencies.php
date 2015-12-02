@@ -72,7 +72,23 @@ $container['places'] = function ($c) {
     return new PlacesService($c['db']);
 };
 
+$container['md_parser'] = function ($c) {
+    $parser = new Parsedown();
+    return $parser;
+};
 
+//toc - array with all document's names and slugs
+use Noodlehaus\Config;
+$container['toc'] = function($c) {
+    //retrieve all settings
+    $dir_name = $c['application']['home_path'];
+    $index_file_name = $c['application']['home_index_file'];
+    
+    $indexFile = "{$dir_name}/{$index_fil}";
+    //read the file
+    $toc = Config::load($indexFile)->get('toc');
+    return $toc;
+};
 
 
 /*
