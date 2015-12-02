@@ -34,13 +34,13 @@
                                 Get Slim with Slim
                             </a>
                         </li>
-                        {% for doc in docs %}
+                        {% for home in homes %}
                             <li>
-                                <a href="{{ path_for('docs', {fname : doc.slug}) }}"> {{ doc.fname }}</a>
+                                <a href="{{ path_for('homes', {fname : home.slug}) }}"> {{ home.fname }}</a>
                             </li>
-                            {% if current_file == doc.fname and doc.anchors is not empty %}
+                            {% if current_file == home.fname and home.anchors is not empty %}
                                 <ul>
-                                    {% for anchor in doc.anchors %}
+                                    {% for anchor in home.anchors %}
                                         <li>
                                             <a href="#{{ anchor }}"> {{ anchor }}</a>
                                         </li>
