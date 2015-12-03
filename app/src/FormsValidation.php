@@ -78,6 +78,14 @@ function validateLoginForm($customer) {
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
 }
 
+function validateRegisterForm($customer) {
+    $v = new Validator($customer);
+    $v->rule('required', ['username', 'email', 'password']);
+    $v->rule('lengthMin', ['username', 'password'], 3);
+    $v->rule('email', 'email');
+    return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
+}
+
 
 
 
