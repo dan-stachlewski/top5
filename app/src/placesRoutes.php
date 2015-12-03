@@ -1,6 +1,5 @@
 <?php
 
-include "app/src/FormsValidation.php";
 
     $app->get('/places', function ($request, $response, $args) {
 
