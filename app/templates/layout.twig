@@ -80,7 +80,7 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                {% if not userLogged %} 
+                                                {% if not customerLogged %} 
                                                     <li>
                                                         <a href="{{ path_for('login') }}">Login</a>
                                                     </li>
@@ -93,7 +93,8 @@
                                                     </li>
                                                     <li>
                                                         <a href="">Logout</a>
-                                                    </li> 
+                                                    </li>
+                                                    {# NEED TO CHANGE TO isCustomer INSTEAD OF isAdministrator #}
                                                     {% if  isAdministrator %}
                                                         <li class="divider"></li>
                                                         <li>
