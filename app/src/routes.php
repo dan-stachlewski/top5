@@ -21,7 +21,7 @@
 require 'app/src/homeRoutes.php';
 require 'app/src/placesRoutes.php';
 
-/* ============ ROUTE FOR HOMEPAGE ============ */
+/* ============ ROUTE FOR HOMEPAGE A ============ */
 /***
  * Step 1 - add the $app->get(...);
  * Step 2 - create the template for the render
@@ -34,7 +34,7 @@ $app->get('/', function ($request, $response, $args) {
     $tags = $this->places->getTags();    
     
     
-    $this->view->render($response, '/home/homepage_structure.twig', [
+    $this->view->render($response, '/home-part-a/homepage_b_structure.twig', [
         //'place' => $place,
         'tags' => $tags,//'docs' => $this->toc,
         //'flash_messages' => $flash_messages,
@@ -42,7 +42,30 @@ $app->get('/', function ($request, $response, $args) {
         'page_content' => "<h1>Welcome to the Top 5 website.</h1>",
     ]);
 
-})->setName('homepage');
+})->setName('homepage_a');
+
+/* ============ ROUTE FOR HOMEPAGE B ============ */
+/***
+ * Step 1 - add the $app->get(...);
+ * Step 2 - create the template for the render
+ * Step 3 - Makse sure the 'page_content' exists in the template like  {{ page_content|raw }}
+ *** NOTE *** I wanted to generate links that would take the user to each of the categories and show all for that category however Janusz said this should be for PART B All I need is a login screen for Part A
+ */
+$app->get('/', function ($request, $response, $args) {
+    
+
+    $tags = $this->places->getTags();    
+    
+    
+    $this->view->render($response, '/home-part-b/homepage_structure.twig', [
+        //'place' => $place,
+        'tags' => $tags,//'docs' => $this->toc,
+        //'flash_messages' => $flash_messages,
+       // 'userLogged' => isset($_SESSION['user_id']),
+        'page_content' => "<h1>Welcome to the Top 5 website.</h1>",
+    ]);
+
+})->setName('homepage_b');
 
 $app->get('/test', function ($request, $response, $args) {
     $this->view->render($response, 'navbar.twig', [
