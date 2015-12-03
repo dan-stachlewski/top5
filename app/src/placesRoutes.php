@@ -1,7 +1,7 @@
 <?php
 
 
-    $app->get('/places', function ($request, $response, $args) {
+$app->get('/places', function ($request, $response, $args) {
 
         $places = $this->places->getAllPlaces($_SESSION['customer_id']);
         $flash_messages = $this->flash->getMessages();
