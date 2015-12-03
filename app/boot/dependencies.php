@@ -17,6 +17,17 @@ $container['view'] = function ($c) use($configuration) {
     return $view;
 };
 
+//toc - all documents and slugs
+use Noodlehaus\Config;
+
+$container['toc'] = function($c) {
+    $dir_name = $c['application']['docs_path'];
+    $index_file_name = $c['application']['docs_index_file'];
+    $indexFile = "{$dir_name}/{$index_file_name}";
+    $toc = Config::load($indexFile)->get('toc');
+    return $toc;
+};
+
 //set up CSRF
 $container['csrf'] = function ($c) {
     $guard = new \Slim\Csrf\Guard();
@@ -69,13 +80,9 @@ $container['db'] = function ($c) use($configuration, $app) {
 };
 
 
-$container['places'] = function ($c) {
-    return new PlacesService($c['db']);
-};
-
 //anything application specific can be preserved
-$container['application'] = function ($c) use($conf) {
-    return $conf->get('application');
+$container['application'] = function ($c) use($configuration) {
+    return $configuration->get('application');
 };
 //set up markdown processor
 $container['md_parser'] = function ($c) {
@@ -83,17 +90,13 @@ $container['md_parser'] = function ($c) {
     return $parser;
 };
 
-//toc - all documents and slugs
-use Noodlehaus\Config;
-
-$container['toc'] = function($c) {
-    $dir_name = $c['application']['docs_path'];
-    $index_file_name = $c['application']['docs_index_file'];
-    $indexFile = "{$dir_name}/{$index_file_name}";
-    $toc = Config::load($indexFile)->get('toc');
-    return $toc;
+$container['places'] = function ($c) {
+    return new PlacesService($c['db']);
 };
 
+$container['customers'] = function ($c) {
+    return new CustomerService($c['db']);
+};
 
 /*
 $container['auth'] = function ($c) {
