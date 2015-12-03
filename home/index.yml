@@ -1,0 +1,19 @@
+toc:
+  - fname : 'Top 5 Restaurants.md'
+    slug  : 'top-5-restaurants.html'
+
+  - fname : 'Top 5 SuperMarkets.md'
+    slug  : 'top-5-restaurants.html'
+
+  - fname : 'Top 5 Hardware Stores.md'
+    slug  : 'top-5-restaurants.html'
+    
+  - fname : 'Top 5 Tech & Gadgets.md'
+    slug  : 'top-5-tech-and-gadgets.html'    
+    
+  - fname : 'Top 5 Fitness Outlets.md'
+    slug  : 'top-5-fitness-outlets.html'    
+    
+    anchors :
+    - installation
+    - license

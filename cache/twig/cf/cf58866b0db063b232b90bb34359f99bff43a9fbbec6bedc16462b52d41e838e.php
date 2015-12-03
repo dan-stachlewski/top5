@@ -1,14 +1,14 @@
 <?php
 
-/* places/places_add.twig */
-class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325a214f extends Twig_Template
+/* places/places_edit.twig */
+class __TwigTemplate_88b6c0675728a1689cba1565b27a3372d43ec7a49a6a124123a8f5e9523f5e74 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
 
         // line 1
-        $this->parent = $this->loadTemplate("layout.twig", "places/places_add.twig", 1);
+        $this->parent = $this->loadTemplate("layout.twig", "places/places_edit.twig", 1);
         $this->blocks = array(
             'content' => array($this, 'block_content'),
         );
@@ -28,18 +28,24 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
     public function block_content($context, array $blocks = array())
     {
         // line 4
-        echo "    
+        echo "
     <img src=\"";
         // line 5
         echo twig_escape_filter($this->env, $this->env->getExtension('slim')->baseUrl(), "html", null, true);
         echo "/images/generic-place-small.png\">
     
-    <h2>Add New Place</h2>
-    <h4>Please enter details for the 'New' Place</h4>
+    <h2>Edit ";
+        // line 7
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["place"]) ? $context["place"] : null), "name", array()), "html", null, true);
+        echo "</h2>
+    <h4>Please 'Update' the details for ";
+        // line 8
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["place"]) ? $context["place"] : null), "name", array()), "html", null, true);
+        echo "</h4>
 
     <form action=\"";
         // line 10
-        echo twig_escape_filter($this->env, $this->env->getExtension('slim')->pathFor("places-add"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('slim')->pathFor("places-edit", array("id" => $this->getAttribute((isset($context["place"]) ? $context["place"] : null), "place_id", array()))), "html", null, true);
         echo "\" method=\"post\">
 
         <div class=\"form-group ";
@@ -52,12 +58,12 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
             <input type=\"text\" class=\"form-control\" name=\"name\" value=\"";
         // line 14
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["place"]) ? $context["place"] : null), "name", array()), "html", null, true);
-        echo "\"  />
+        echo "\" /> 
             ";
         // line 15
-        if ($this->getAttribute((isset($context["errors"]) ? $context["errors"] : null), "name", array())) {
+        if ($this->getAttribute((isset($context["errors"]) ? $context["errors"] : null), "user_name", array())) {
             echo "<span class=\"help-block\">";
-            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["errors"]) ? $context["errors"] : null), "name", array()), 0, array()), "html", null, true);
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["errors"]) ? $context["errors"] : null), "user_name", array()), 0, array()), "html", null, true);
             echo "</span>";
         }
         // line 16
@@ -69,7 +75,7 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
             echo "has-error";
         }
         echo "\">
-            <label class=\"control-label\" for=\"address\">Adress:</label>
+            <label class=\"control-label\" for=\"address\">Address:</label>
             <input type=\"text\" class=\"form-control\" name=\"address\" value=\"";
         // line 20
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["place"]) ? $context["place"] : null), "address", array()), "html", null, true);
@@ -83,7 +89,7 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
         }
         // line 22
         echo "        </div>
-        
+
         <div class=\"form-group ";
         // line 24
         if ($this->getAttribute((isset($context["errors"]) ? $context["errors"] : null), "suburb", array())) {
@@ -104,7 +110,7 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
         }
         // line 28
         echo "        </div>
-        
+
         <div class=\"form-group ";
         // line 30
         if ($this->getAttribute((isset($context["errors"]) ? $context["errors"] : null), "postcode", array())) {
@@ -125,8 +131,8 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
         }
         // line 34
         echo "        </div>
-        
-        <!-- This takes the tag_id and converts the output to category that is related to the tag_id -->
+
+          
         <div class=\"form-group\">
             <label for=\"tag_id\">Select Category:</label>
             <select class=\"form-control\" name=\"tag_id\">
@@ -138,7 +144,11 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
             // line 41
             echo "                    <option value=\"";
             echo twig_escape_filter($this->env, $context["idx"], "html", null, true);
-            echo "\">";
+            echo "\" ";
+            if (($context["tag"] == $this->getAttribute((isset($context["place"]) ? $context["place"] : null), "short", array()))) {
+                echo "selected";
+            }
+            echo ">";
             echo twig_escape_filter($this->env, $context["tag"], "html", null, true);
             echo "</option>
                 ";
@@ -151,21 +161,21 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
         </div>
 
         <hr>
-        <div class=\"well\">
-            <input type=\"hidden\" name=\"csrf_name\" value=\"";
+
+        <input type=\"hidden\" name=\"csrf_name\" value=\"";
         // line 48
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["csrf"]) ? $context["csrf"] : null), "name", array()), "html", null, true);
         echo "\">
-            <input type=\"hidden\" name=\"csrf_value\" value=\"";
+        <input type=\"hidden\" name=\"csrf_value\" value=\"";
         // line 49
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["csrf"]) ? $context["csrf"] : null), "value", array()), "html", null, true);
         echo "\">
-            <button type=\"submit\" class=\"btn btn-primary\">Submit</button>
-            <a class=\"btn btn-default\"  href=\"";
+        <button type=\"submit\" class=\"btn btn-primary\">Submit</button>
+        <a class=\"btn btn-default\" href=\"";
         // line 51
         echo twig_escape_filter($this->env, $this->env->getExtension('slim')->pathFor("places-all"), "html", null, true);
         echo "\">Cancel</a>
-        </div>
+
     </form>
 
 ";
@@ -173,7 +183,7 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
 
     public function getTemplateName()
     {
-        return "places/places_add.twig";
+        return "places/places_edit.twig";
     }
 
     public function isTraitable()
@@ -183,62 +193,61 @@ class __TwigTemplate_102b21edd4aa400042b097d2cfa0940abf6ca21a17a753495ff78a06325
 
     public function getDebugInfo()
     {
-        return array (  166 => 51,  161 => 49,  157 => 48,  150 => 43,  139 => 41,  135 => 40,  127 => 34,  121 => 33,  117 => 32,  110 => 30,  106 => 28,  100 => 27,  96 => 26,  89 => 24,  85 => 22,  79 => 21,  75 => 20,  68 => 18,  64 => 16,  58 => 15,  54 => 14,  47 => 12,  42 => 10,  34 => 5,  31 => 4,  28 => 3,  11 => 1,);
+        return array (  176 => 51,  171 => 49,  167 => 48,  160 => 43,  145 => 41,  141 => 40,  133 => 34,  127 => 33,  123 => 32,  116 => 30,  112 => 28,  106 => 27,  102 => 26,  95 => 24,  91 => 22,  85 => 21,  81 => 20,  74 => 18,  70 => 16,  64 => 15,  60 => 14,  53 => 12,  48 => 10,  43 => 8,  39 => 7,  34 => 5,  31 => 4,  28 => 3,  11 => 1,);
     }
 }
 /* {% extends 'layout.twig' %}*/
 /* */
 /* {% block content %}*/
-/*     */
+/* */
 /*     <img src="{{ base_url()}}/images/generic-place-small.png">*/
 /*     */
-/*     <h2>Add New Place</h2>*/
-/*     <h4>Please enter details for the 'New' Place</h4>*/
+/*     <h2>Edit {{ place.name }}</h2>*/
+/*     <h4>Please 'Update' the details for {{ place.name }}</h4>*/
 /* */
-/*     <form action="{{ path_for('places-add') }}" method="post">*/
+/*     <form action="{{ path_for('places-edit', {id: place.place_id}) }}" method="post">*/
 /* */
 /*         <div class="form-group {% if errors.name %}has-error{% endif %}">*/
 /*             <label class="control-label" for="name">Name:</label>*/
-/*             <input type="text" class="form-control" name="name" value="{{ place.name}}"  />*/
-/*             {% if errors.name %}<span class="help-block">{{ errors.name.0 }}</span>{% endif %}*/
+/*             <input type="text" class="form-control" name="name" value="{{ place.name }}" /> */
+/*             {% if errors.user_name %}<span class="help-block">{{ errors.user_name.0 }}</span>{% endif %}*/
 /*         </div>*/
 /* */
 /*         <div class="form-group {% if errors.address %}has-error{% endif %}">*/
-/*             <label class="control-label" for="address">Adress:</label>*/
-/*             <input type="text" class="form-control" name="address" value="{{ place.address}}"  />*/
+/*             <label class="control-label" for="address">Address:</label>*/
+/*             <input type="text" class="form-control" name="address" value="{{ place.address }}"  />*/
 /*             {% if errors.address %}<span class="help-block">{{ errors.address.0 }}</span>{% endif %}*/
 /*         </div>*/
-/*         */
+/* */
 /*         <div class="form-group {% if errors.suburb %}has-error{% endif %}">*/
 /*             <label class="control-label" for="suburb">Suburb:</label>*/
-/*             <input type="text" class="form-control" name="suburb" value="{{ place.suburb}}"  />*/
+/*             <input type="text" class="form-control" name="suburb" value="{{ place.suburb }}"  />*/
 /*             {% if errors.suburb %}<span class="help-block">{{ errors.suburb.0 }}</span>{% endif %}*/
 /*         </div>*/
-/*         */
+/* */
 /*         <div class="form-group {% if errors.postcode %}has-error{% endif %}">*/
 /*             <label class="control-label" for="postcode">Postcode:</label>*/
-/*             <input type="text" class="form-control" name="postcode" value="{{ place.postcode}}"  />*/
+/*             <input type="text" class="form-control" name="postcode" value="{{ place.postcode }}"  />*/
 /*             {% if errors.postcode %}<span class="help-block">{{ errors.postcode.0 }}</span>{% endif %}*/
 /*         </div>*/
-/*         */
-/*         <!-- This takes the tag_id and converts the output to category that is related to the tag_id -->*/
+/* */
+/*           */
 /*         <div class="form-group">*/
 /*             <label for="tag_id">Select Category:</label>*/
 /*             <select class="form-control" name="tag_id">*/
-/*                 {% for idx, tag in tags %}*/
-/*                     <option value="{{ idx }}">{{ tag }}</option>*/
+/*                 {% for idx,  tag in tags %}*/
+/*                     <option value="{{ idx }}" {%if tag == place.short %}selected{% endif %}>{{ tag }}</option>*/
 /*                 {% endfor %}*/
 /*             </select>*/
 /*         </div>*/
 /* */
 /*         <hr>*/
-/*         <div class="well">*/
-/*             <input type="hidden" name="csrf_name" value="{{ csrf.name }}">*/
-/*             <input type="hidden" name="csrf_value" value="{{ csrf.value }}">*/
-/*             <button type="submit" class="btn btn-primary">Submit</button>*/
-/*             <a class="btn btn-default"  href="{{ path_for('places-all') }}">Cancel</a>*/
-/*         </div>*/
+/* */
+/*         <input type="hidden" name="csrf_name" value="{{ csrf.name }}">*/
+/*         <input type="hidden" name="csrf_value" value="{{ csrf.value }}">*/
+/*         <button type="submit" class="btn btn-primary">Submit</button>*/
+/*         <a class="btn btn-default" href="{{ path_for('places-all') }}">Cancel</a>*/
+/* */
 /*     </form>*/
 /* */
 /* {% endblock %}*/
-/* */

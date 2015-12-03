@@ -88,8 +88,14 @@ class __TwigTemplate_43061cc16d22a6176529d5d82f898b91970aa3a257707c8dd08d0425e59
                 // line 34
                 echo twig_escape_filter($this->env, $this->env->getExtension('slim')->pathFor("places-show", array("id" => $this->getAttribute($context["place"], "place_id", array()))), "html", null, true);
                 echo "\">Show</a>
-                                <a class=\"btn btn-success\" href=\"\">Edit</a>
-                                <a class=\"btn btn-danger\" href=\"\">Delete</a>
+                                <a class=\"btn btn-success\" href=\"";
+                // line 35
+                echo twig_escape_filter($this->env, $this->env->getExtension('slim')->pathFor("places-edit", array("id" => $this->getAttribute($context["place"], "place_id", array()))), "html", null, true);
+                echo "\">Edit</a>
+                                <a class=\"btn btn-danger\" href=\"";
+                // line 36
+                echo twig_escape_filter($this->env, $this->env->getExtension('slim')->pathFor("places-delete", array("id" => $this->getAttribute($context["place"], "place_id", array()))), "html", null, true);
+                echo "\">Delete</a>
                             </td>
                         </tr>
                     ";
@@ -102,20 +108,22 @@ class __TwigTemplate_43061cc16d22a6176529d5d82f898b91970aa3a257707c8dd08d0425e59
                 </tbody>
             </table>
 
-        </div>
-        <a class=\"btn btn-danger\" href=\"";
+            <div class=\"well\">
+                <a class=\"btn btn-primary\" href=\"";
             // line 45
             echo twig_escape_filter($this->env, $this->env->getExtension('slim')->pathFor("places-add"), "html", null, true);
             echo "\">New Place</a>
+            </div>
+        </div>
     ";
         } else {
-            // line 47
-            echo "        <div class=\"row\">
+            // line 49
+            echo "        <div class=\"well\">
             <h5>No places found</h5>
         </div>
     ";
         }
-        // line 50
+        // line 52
         echo "    
 ";
     }
@@ -132,7 +140,7 @@ class __TwigTemplate_43061cc16d22a6176529d5d82f898b91970aa3a257707c8dd08d0425e59
 
     public function getDebugInfo()
     {
-        return array (  119 => 50,  113 => 47,  108 => 45,  101 => 40,  89 => 34,  84 => 32,  80 => 31,  76 => 30,  72 => 29,  68 => 28,  64 => 27,  61 => 26,  57 => 25,  40 => 10,  38 => 9,  31 => 4,  28 => 3,  11 => 1,);
+        return array (  127 => 52,  121 => 49,  114 => 45,  107 => 40,  97 => 36,  93 => 35,  89 => 34,  84 => 32,  80 => 31,  76 => 30,  72 => 29,  68 => 28,  64 => 27,  61 => 26,  57 => 25,  40 => 10,  38 => 9,  31 => 4,  28 => 3,  11 => 1,);
     }
 }
 /* {% extends 'layout.twig' %}*/
@@ -169,8 +177,8 @@ class __TwigTemplate_43061cc16d22a6176529d5d82f898b91970aa3a257707c8dd08d0425e59
 /*                             <td>{{ place.tag_id }}</td>*/
 /*                             <td>    */
 /*                                 <a class="btn btn-info" href="{{ path_for('places-show', {'id':place.place_id})}}">Show</a>*/
-/*                                 <a class="btn btn-success" href="">Edit</a>*/
-/*                                 <a class="btn btn-danger" href="">Delete</a>*/
+/*                                 <a class="btn btn-success" href="{{ path_for('places-edit', {'id':place.place_id})}}">Edit</a>*/
+/*                                 <a class="btn btn-danger" href="{{ path_for('places-delete', {'id':place.place_id})}}">Delete</a>*/
 /*                             </td>*/
 /*                         </tr>*/
 /*                     {% endfor %}*/
@@ -178,10 +186,12 @@ class __TwigTemplate_43061cc16d22a6176529d5d82f898b91970aa3a257707c8dd08d0425e59
 /*                 </tbody>*/
 /*             </table>*/
 /* */
+/*             <div class="well">*/
+/*                 <a class="btn btn-primary" href="{{ path_for('places-add')}}">New Place</a>*/
+/*             </div>*/
 /*         </div>*/
-/*         <a class="btn btn-danger" href="{{ path_for('places-add')}}">New Place</a>*/
 /*     {% else %}*/
-/*         <div class="row">*/
+/*         <div class="well">*/
 /*             <h5>No places found</h5>*/
 /*         </div>*/
 /*     {% endif %}    */
