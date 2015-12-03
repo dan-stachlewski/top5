@@ -69,3 +69,17 @@ function validateAddPlaceForm($place) {
 
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
 }
+
+function validateLoginForm($customer) {
+    $v = new Validator($customer);
+    $v->rule('required', [ 'username', 'password']);
+    $v->rule('lengthMin', ['username',], 3);
+
+    return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
+}
+
+
+
+
+
+
