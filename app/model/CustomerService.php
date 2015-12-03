@@ -10,7 +10,7 @@ class CustomerService {
 
     function validateCustomer($customer) {
         $errors = [];
-
+//ddd($customer);
         $customer = $this->getCustomerByUsername($customer['username']);
         if ($customer) {
             //user already exists
@@ -21,13 +21,14 @@ class CustomerService {
 
     public function authenticateCustomer($username, $password) {
         $customer= $this->getCustomerByUsername($username);
-
+        //ddd($customer);
         if ($customer === false) {
             return false; //username does not exist
         } else if (!password_verify($password, $customer['password'])) {
             return false; //incorrect password
         } else {
             unset($customer['password']);
+            //ddd($customer);
             return $customer;
         }
     }
@@ -35,7 +36,7 @@ class CustomerService {
     public function getCustomerById($customer_id) {
 
         $query = "SELECT
-                    customers.id AS customers_id,
+                    customers.id AS customer_id,
                     customers.username,
                     customers.email,
                     customers.password,
@@ -63,10 +64,10 @@ class CustomerService {
     public function getCustomerByUsername($username) {
 
         $query = "SELECT
-                    customers.id AS customers_id,
+                    customers.id AS customer_id,
                     customers.username,
                     customers.email,
-                    customers.password,
+                    customers.password
                   FROM
                     customers
                   WHERE
@@ -80,7 +81,7 @@ class CustomerService {
             $stmnt->bindValue(':email', $username, PDO::PARAM_STR);
 
             $stmnt->execute();
-            $result = $stmnt->fetch();
+            $result = $stmnt->fetch(PDO::FETCH_ASSOC);
             $stmnt->closeCursor();
 
             return $result;
@@ -90,8 +91,8 @@ class CustomerService {
         }
     }
 
-    public function addCustomer($username) {
-        $query = "INSERT INTO users 
+    public function addCustomer($customer) {
+        $query = "INSERT INTO customers 
               (username, email, password) 
               VALUES 
               (:username, :email, :password)";
