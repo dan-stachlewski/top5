@@ -17,7 +17,7 @@
 //$twig->addGlobal('isAdministrator', isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'ADMIN');
 
 //require 'app/src/FormsValidation.php';
-
+require 'app/src/customersRoutes.php';
 require 'app/src/homeRoutes.php';
 require 'app/src/placesRoutes.php';
 
@@ -42,7 +42,7 @@ $app->get('/', function ($request, $response, $args) {
         'page_content' => "<h1>Welcome to the Top 5 website.</h1>",
     ]);
 
-})->setName('homepage_a');
+})->setName('home');
 
 /* ============ ROUTE FOR HOMEPAGE B LINKS TO DATA BASED ON CATEGORY ============ */
 /***
