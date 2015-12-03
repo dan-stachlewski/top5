@@ -67,13 +67,5 @@ $app->get('/client', function ($request, $response, $args) {
 
 })->setName('homepage_b');
 
-$app->get('/test', function ($request, $response, $args) {
-    $this->view->render($response, 'navbar.twig', [
-        'home' => $this->toc
-    ]);
-});
 
-$app->get('/home/{slug}', function ($request, $response, $args) {
-    echo "You selected {$args['slug']}";
-});
 
