@@ -2,7 +2,7 @@
 
 /* 
  * ROUTE - displayed as:
- * customers/places
+ * customers/places - Customers Dashboard = Administrators Dashboard
  * customers/places/show/place_id
  * customers/places/edit/place_id
  * customers/places/add/place_id
@@ -61,7 +61,9 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
                 'customer' => $customer,
                 'flash_messages' => $flash_messages,
                 'errors' => $field_errors,
-               // 'userLogged' => isset($_SESSION['user_id']),
+                /* ==== THIS EFFECTS WHAT IS SHOWN ON THE CUSTOMERS LOGIN/LOGOUT DROPDOWN MENU ==== */
+                /* ==== REQUIRED IN EVERY ROUTE ==== */
+                'customerLogged' => isset($_SESSION['customer_id']),
                 'csrf' => [
                     'name' => $request->getAttribute('csrf_name'),
                     'value' => $request->getAttribute('csrf_value'),
@@ -108,7 +110,7 @@ $app->map(['GET', 'POST'], '/customers/register', function ($request, $response,
                 'customer' => $customer,
                 'flash_messages' => $flash_messages,
                 'errors' => $field_errors,
-              //  'userLogged' => isset($_SESSION['user_id']),
+                'customerLogged' => isset($_SESSION['customer_id']),
                 'csrf' => [
                     'name' => $request->getAttribute('csrf_name'),
                     'value' => $request->getAttribute('csrf_value'),
