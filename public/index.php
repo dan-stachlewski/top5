@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 session_start();
 
 // Simulate Customer Login *** @ the beginning so we can RETRIEVE & DISPLAY places ***
-$_SESSION['customer_id'] = 1;
+//$_SESSION['customer_id'] = 1;
 
 
 use Noodlehaus\Config;
@@ -20,6 +20,7 @@ $app = new \Slim\App(['settings'=>$settings]);
 
 //require 'app/model/AuthService.php';
 require 'app/model/PlacesService.php';
+require 'app/model/CustomerService.php';
 
 require 'app/boot/dependencies.php';
 require 'app/boot/middleware.php';
