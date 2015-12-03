@@ -1,0 +1,14 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+    {{ page_content|raw }}
+    <h2>We have the Top 5 for:</h2>
+    <ul>
+    <li>
+        {% for idx, tag in tags %}
+        <option value="{{ idx }}">{{ tag }}</option>
+        {% endfor %}
+    </li>
+    </ul>
+
+{% endblock %}
