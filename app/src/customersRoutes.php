@@ -17,7 +17,7 @@
  * 
  */
 
-
+require 'app/src/FormsValidation.php';
 
 //NEED TO KNOW USER IS LOGGED IN AND ADMIN
 $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $args) {
@@ -25,22 +25,23 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
     $flash_messages = $this->flash->getMessages();
     $customer = [];
     if ($request->isPost()) {
-        //$userService = new AuthService();
+        //$customerService = new CustomerService();
 
         $customer['username'] = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
         $customer['password'] = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
-
+        
         $customer_form = validateLoginForm($customer);
+        //ddd($customer);
 
         if ($customer_form['is_valid']) {
-            $valid_customer = $this->auth->authenticateUser($customer['username'], $customer['password']);
+            $valid_customer = $this->customers->authenticateCustomer($customer['username'], $customer['password']);
 
             if ($valid_customer) {
                 //NEED TO KNOW USER IS LOGGED IN AND ADMIN
                 $_SESSION['customer_id'] = $valid_customer['customer_id']; //this data can now be passed throughout
                 
                 $this->flash->addMessage('success', 'Login successful');
-                return $response->withRedirect($this->router->pathFor('places-home'));
+                return $response->withRedirect($this->router->pathFor('places-all')); //customers-home
             } else {
                 $flash_messages['danger'][] = "Incorrect Username or Email & Password combination - Please try again!";
             }
@@ -59,3 +60,6 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
                 ]
     ]);
 })->setName('login');
+
+
+
