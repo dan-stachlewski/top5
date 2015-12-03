@@ -3,8 +3,7 @@
 class CustomerService {
 
     private $db;
-    
-    //slim has container that globally stores objects
+
     public function __construct(\PDO $db) {
         $this->db = $db;
     }
@@ -12,16 +11,16 @@ class CustomerService {
     function validateCustomer($customer) {
         $errors = [];
 
-        $customer = $this->getUserByUsername($customer['username']);
+        $customer = $this->getCustomerByUsername($customer['username']);
         if ($customer) {
             //user already exists
-            $errors[] = "Either username or email already in the database";
+            $errors[] = "Either Username or Email already in the Database";
         }
         return $errors;
     }
 
-    public function authenticateUser($username, $password) {
-        $customer= $this->getUserByUname($username);
+    public function authenticateCustomer($username, $password) {
+        $customer= $this->getCustomerByUsername($username);
 
         if ($customer === false) {
             return false; //username does not exist
@@ -61,7 +60,7 @@ class CustomerService {
         }
     }
 
-    public function getUserByUsername($username) {
+    public function getCustomerByUsername($username) {
 
         $query = "SELECT
                     customers.id AS customers_id,
@@ -181,23 +180,6 @@ class CustomerService {
         }
     }
 
-    public function deleteUser($user_id) {
-        $query = "DELETE
-             From
-                users
-              Where
-                (users.id = :user_id ) 
-              ";
-        try {
-            $stmnt = $this->db->prepare($query);
-            $stmnt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-            $stmnt->execute();
-            $stmnt->closeCursor();
-        } catch (PDOException $e) {
-            Database::display_db_error($e->getMessage());
-            exit;
-        }
-    }
 /*
     public function getRoles() {
 
