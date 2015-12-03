@@ -17,6 +17,11 @@
  * 
  */
 
+/* ============ [NOTE] ============ */
+/***
+ * B/c we are using encryption, we need to set up the registration 1st then register a new user b/c the current users are useless...
+ */
+
 require 'app/src/FormsValidation.php';
 
 //NEED TO KNOW USER IS LOGGED IN AND ADMIN
@@ -35,13 +40,16 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
 
         if ($customer_form['is_valid']) {
             $valid_customer = $this->customers->authenticateCustomer($customer['username'], $customer['password']);
-
             if ($valid_customer) {
                 //NEED TO KNOW USER IS LOGGED IN AND ADMIN
+                
+                
                 $_SESSION['customer_id'] = $valid_customer['customer_id']; //this data can now be passed throughout
                 
                 $this->flash->addMessage('success', 'Login successful');
+                
                 return $response->withRedirect($this->router->pathFor('places-all')); //customers-home
+                //ddd($valid_customer);
             } else {
                 $flash_messages['danger'][] = "Incorrect Username or Email & Password combination - Please try again!";
             }
@@ -60,6 +68,53 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
                 ]
     ]);
 })->setName('login');
+
+$app->map(['GET', 'POST'], '/customers/register', function ($request, $response, $args) {
+
+    $field_errors = [];
+    $customer = [];
+    
+    $flash_messages = $this->flash->getMessages();
+
+    if ($request->isPost()) {
+
+        $customer['username'] = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+        $customer['email'] = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
+        $customer['password'] = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+
+        //ddd($customer);
+        $customer_form = validateRegisterForm($customer);
+
+        if ($customer_form['is_valid']) {
+            //$userService = new AuthService();
+            $errors = $this->customers->validateCustomer($customer);
+
+            if (empty($errors)) {
+//                $this->customers->addUser($customer);
+//                $this->flash->addMessage('success', 'New Customer - ' . $_POST['username'] . 'added!');
+//                $this->flash->addMessage('success', 'Hi, ' . $_POST['username'] . 'please login with your credentials');              
+                $this->customers->addCustomer($customer);
+                $this->flash->addMessage('success', 'New Customer added!');
+                $this->flash->addMessage('success', 'Hi, please login with your credentials');
+                return $response->withRedirect($this->router->pathFor('login'));
+            } else {
+                $flash_messages['danger'] = $errors;
+            }
+        } else {
+            $field_errors = $customer_form['has_errors'];
+        }
+    }
+    return $this->view->render($response, 'customers/customer_register.twig', [
+                'customer' => $customer,
+                'flash_messages' => $flash_messages,
+                'errors' => $field_errors,
+              //  'userLogged' => isset($_SESSION['user_id']),
+                'csrf' => [
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value'),
+                ]
+    ]);
+})->setName('register');
 
 
 
