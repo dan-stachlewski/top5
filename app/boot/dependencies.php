@@ -41,6 +41,7 @@ $container['notFoundHandler'] = function ($c) {
     };
 };
 
+
 $c['errorHandler'] = function ($c) {
     return function ($request, $response, $exception) use ($c) {
         return $c['view']->render($response, 'errors/500.twig', ['message' => $exception->getMessage()])
@@ -72,20 +73,23 @@ $container['places'] = function ($c) {
     return new PlacesService($c['db']);
 };
 
+//anything application specific can be preserved
+$container['application'] = function ($c) use($conf) {
+    return $conf->get('application');
+};
+//set up markdown processor
 $container['md_parser'] = function ($c) {
     $parser = new Parsedown();
     return $parser;
 };
 
-//toc - array with all document's names and slugs
+//toc - all documents and slugs
 use Noodlehaus\Config;
+
 $container['toc'] = function($c) {
-    //retrieve all settings
-    $dir_name = $c['application']['home_path'];
-    $index_file_name = $c['application']['home_index_file'];
-    
-    $indexFile = "{$dir_name}/{$index_fil}";
-    //read the file
+    $dir_name = $c['application']['docs_path'];
+    $index_file_name = $c['application']['docs_index_file'];
+    $indexFile = "{$dir_name}/{$index_file_name}";
     $toc = Config::load($indexFile)->get('toc');
     return $toc;
 };
