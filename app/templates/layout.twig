@@ -91,16 +91,20 @@
                                                     <li>
                                                         <a href="">Customer Profile</a>
                                                     </li>
+                                                    <li class="divider"></li>
                                                     <li>
-                                                        <a href="">Logout</a>
+                                                        <a href="{{ path_for('logout') }}">Logout</a>
                                                     </li>
-                                                    {# NEED TO CHANGE TO isCustomer INSTEAD OF isAdministrator #}
-                                                    {% if  isAdministrator %}
+                                                    {# 
+                                                        DONT NEED CUSTOMER-ADMIN AS THE PLACES ALL DOES THE SAME JOB
+                                                    
+                                                    {% if  isCustomerAdministrator %}
                                                         <li class="divider"></li>
                                                         <li>
                                                             <a href="">Places Dashboard</a>
                                                         </li>
                                                         {% endif %}
+                                                    #}
                                                 {% endif %}
                                             </ul>
                                         </div><!-- /.dropdown col-sm-5 -->
