@@ -85,6 +85,7 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
     $field_errors = [];
     $flash_messages = $this->flash->getMessages();
     $customer = [];
+    $title = 'Login';
     if ($request->isPost()) {
         //$customerService = new CustomerService();
 
@@ -117,6 +118,7 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
                 'customer' => $customer,
                 'flash_messages' => $flash_messages,
                 'errors' => $field_errors,
+                'title' => $title,
                 /* ==== THIS EFFECTS WHAT IS SHOWN ON THE CUSTOMERS LOGIN/LOGOUT DROPDOWN MENU ==== */
                 /* ==== REQUIRED IN EVERY ROUTE ==== */
                 'customerLogged' => isset($_SESSION['customer_id']),
