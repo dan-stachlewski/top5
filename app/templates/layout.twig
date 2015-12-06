@@ -5,12 +5,14 @@
             <meta charset="utf-8">
             <meta name="description" content="">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>Top 5</title>
+            <title>{% block title %} Top 5 {% endblock title %}</title>
             <!-- Bootstrap Core CSS -->
             <link href="{{ base_url() }}/css/bootstrap.min.css" rel="stylesheet">
 
             <!-- Custom CSS -->
             <link href="{{ base_url() }}/css/simple-sidebar.css" rel="stylesheet">
+            
+            <link href="{{ base_url() }}/css/style.css" rel="stylesheet">
 
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,7 +21,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
             <link rel="author" href="humans.txt">
-        {% endblock %}
+        {% endblock head %}
     </head>
 
     <body>
@@ -80,10 +82,9 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                {% if not customerLogged %} 
-                                                    <li>
-                                                        <a href="{{ path_for('login') }}">Login</a>
-                                                    </li>
+                                                {% if not customerLogged %}
+{#                                                    <li><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>#}
+                                                    <li><a href="{{ path_for('login') }}">Login<span class="login-icon glyphicon glyphicon-log-in"></span></a></li>
                                                     <li class="divider"></li>
                                                     <li>
                                                         <a href="{{ path_for('register') }}">Register</a>
