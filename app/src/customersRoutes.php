@@ -111,7 +111,7 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
                 $flash_messages['danger'][] = "Incorrect Username or Email & Password combination - Please try again!";
             }
         } else {
-            $field_errors = $user_form['has_errors'];
+            $field_errors = $customer_form['has_errors'];
         }
     }
     return $this->view->render($response, 'customers/login.twig', [
@@ -138,6 +138,34 @@ $app->get('customers/logout', function($request, $response, $args) {
     return $response->withRedirect($this->router->pathFor('login'));
 })->setName('logout');
 
+/* ============ CUSTOMER PROFILE ROUTE ============ */
+$app->get('/customers/show/{id:[\d]*}', function ($request, $response, $args) {
+    $customer = [];
+    //$customer_id = (int) $args['id'];
+    $customer_id = $_SESSION['customer_id'];
+    //$place_id = 1;
+    $customer = $this->customers->getCustomerById($customer_id);
+    //ddd($customer_id);
+    
+   
+    //$tags = $this->customers->getTags();
+    //ddd($tags);
+    $flash_messages = $this->flash->getMessages();
+
+    
+return $this->view->render($response, 'customers/customer_show.twig', [
+                'customer' => $customer,
+                //'tags' => $tags,
+                'flash_messages' => $flash_messages,
+                //'errors' => $field_errors,
+                //'userLogged' => isset($_SESSION['user_id']),
+                'csrf' => [
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value'),
+                ]
+        ]);
+})->setName('customers-show');
+    
 
 
 
