@@ -39,11 +39,11 @@ class CustomerService {
                     customers.id AS customer_id,
                     customers.username,
                     customers.email,
-                    customers.password,
+                    customers.password
                   FROM
                     customers
                   WHERE
-                    (customers = :customer_id ) 
+                    (customers.id = :customer_id ) 
               ";
         try {
             $stmnt = $this->db->prepare($query);
