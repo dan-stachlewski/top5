@@ -36,19 +36,21 @@
                                 <a class="btn btn-danger" href="{{ path_for('places-delete', {'id':place.place_id})}}">Delete</a>
                             </td>
                         </tr>
-                    {% endfor %}
+                    {% endfor idx %}
 
                 </tbody>
             </table>
 
             <div class="well">
                 <a class="btn btn-primary" href="{{ path_for('places-add')}}">Add New Place</a>
+                <a href="{{ path_for('logout') }}">Logout</a>
             </div>
         </div>
     {% else %}
-        <div class="well">
-            <h5>No places found</h5>
-            <a class="btn btn-primary" href="{{ path_for('places-add')}}">Add New Place</a>
-        </div>
+            <div class="well">
+                <h5>No Places found for {{ customer.username }}</h5>
+                <a class="btn btn-primary" href="{{ path_for('places-add')}}">Add New Place</a>
+                <a href="{{ path_for('logout') }}">Logout</a>
+            </div>
     {% endif %}    
-{% endblock %}{# empty Twig template #}
+{% endblock content %}{# empty Twig template #}
