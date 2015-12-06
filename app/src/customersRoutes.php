@@ -30,7 +30,7 @@
  */
 
 require 'app/src/FormsValidation.php';
-
+/* ============ CUSTOMER REGISTRATION ROUTE ============ */
 $app->map(['GET', 'POST'], '/customers/register', function ($request, $response, $args) {
 
     $field_errors = [];
@@ -78,7 +78,9 @@ $app->map(['GET', 'POST'], '/customers/register', function ($request, $response,
     ]);
 })->setName('register');
 
-//NEED TO KNOW USER IS LOGGED IN AND ADMIN
+/* ============ CUSTOMER LOGIN ROUTE ============ */
+/* ============ [NOTE] ============ */
+/* NEED TO KNOW USER IS LOGGED IN AND ADMIN */
 $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $args) {
     $field_errors = [];
     $flash_messages = $this->flash->getMessages();
@@ -99,7 +101,7 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
                 
                 
                 $_SESSION['customer_id'] = $valid_customer['customer_id']; //this data can now be passed throughout
-                
+                //ddd($_SESSION['customer_id']);
                 $this->flash->addMessage('success', 'Login successful');
                 
                 return $response->withRedirect($this->router->pathFor('places-all')); //customers-home
@@ -123,8 +125,16 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
                     'value' => $request->getAttribute('csrf_value'),
                 ]
     ]);
-})->setName('login');
+})->setName('login');/* REFERS TO: <form action="{{ path_for('login') }}" method="post"> IN login.twig */
 
+/* ============ CUSTOMER LOGOUT ROUTE ============ */
+$app->get('customers/logout', function($request, $response, $args) {
+    $flash_messages = $this->flash->getMessages();
+    $_SESSION = [];
+    $this->flash->addMessage('success', 'Logout successful');
+    $this->flash->addMessage('success', 'Please login again');
+    return $response->withRedirect($this->router->pathFor('login'));
+})->setName('logout');
 
 
 
