@@ -7,13 +7,14 @@
  */
 
 //get TWIG env object
-//$twig = $app->view->getEnvironment();
+$twig = $app->view->getEnvironment();
 //Set the table of content for the left navbar
 //$twig->addGlobal('docs', $app->toc);
 
 //Is the user logged?
-//$twig->addGlobal('userLogged', isset($_SESSION['user_id']));
-//is the user administrator?
+$twig->addGlobal('customerLogged', isset($_SESSION['customer_id'])); 
+/* ======== [NOTE] Is the USER ADMINISTRATOR? - ======== */
+/* ======== Don't need as CUSTOMER has places_show all that does the same job ======== */
 //$twig->addGlobal('isAdministrator', isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'ADMIN');
 
 //require 'app/src/FormsValidation.php';
