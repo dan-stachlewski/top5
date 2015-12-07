@@ -116,20 +116,21 @@ class CustomerService {
 
     public function updateCustomer($customer) {
 
-        $query = "UPDATE customers 
-                SET full_name=:full_name
-                username=:username,
-                email=:email,
-                id=:customers_id
-            WHERE 
-               (customers.id = :customers_id )  ";
+        $query = "UPDATE
+                    customers 
+                  SET 
+                    full_name=:full_name,
+                    username=:username,
+                    email=:email,
+                    id=:customer_id
+                WHERE 
+                    (customers.id = :customers_id )";
         try {
             $stmnt = $this->db->prepare($query);
-
             $stmnt->bindValue(':full_name', $customer['full_name'], PDO::PARAM_STR);
             $stmnt->bindValue(':username', $customer['username'], PDO::PARAM_STR);
             $stmnt->bindValue(':email', $customer['email'], PDO::PARAM_STR);
-            $stmnt->bindValue(':customers_id', $customer['id'], PDO::PARAM_INT);
+            $stmnt->bindValue(':customer_id', $customer['id'], PDO::PARAM_INT);
             $r = $stmnt->execute();
         } catch (PDOException $e) {
             Database::display_db_error($e->getMessage());
@@ -137,17 +138,19 @@ class CustomerService {
     }
 
     public function changeCustomerPassword($username, $current_password, $new_password) {
-        $user = $this->getCustomerByUsername($username);
+        $customer = $this->getCustomerByUsername($username);
         $errors = [];
         if (!password_verify($current_password, $customer['password'])) {
             $errors = "Current Password incorrect";
             return $errors;
         }
 
-        $query = "UPDATE customers 
-                SET password=:password
-            WHERE 
-               (customers.id = :customer_id )  ";
+        $query = "UPDATE 
+                    customers 
+                  SET 
+                    password=:password
+                  WHERE 
+                    (customers.id = :customer_id )";
         try {
             $stmnt = $this->db->prepare($query);
 
@@ -160,7 +163,7 @@ class CustomerService {
         }
     }
 
-    public function getAllCustomers() {
+    public function getAllCustomers($customer_id) {
 
         $query = "SELECT
                     customers.id AS customer_id,
