@@ -23,6 +23,7 @@
                             <td>{{ customer.email }}</td>
                             <td><a class="btn btn-info" href="{{ path_for('customers-show', {id: customer.customerid}) }}">Show</a>
                                 <a class="btn btn-success" href="{{ path_for('customers-edit', {id: customer.customerid}) }}">Edit</a>
+                            </td>
                         </tr>
                     {% endfor %}
 
