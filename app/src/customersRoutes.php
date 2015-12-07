@@ -167,25 +167,26 @@ return $this->view->render($response, 'customers/customer_show.twig', [
 })->setName('customers-show');
     
 /* ============ CUSTOMER EDIT ROUTE ============ */
-$app->map(['GET', 'POST'], '/edit/{id:[\d]*}', function ($request, $response, $args) {
-        $customer = [];
-        $id = (int) $args['id'];
+$app->map(['GET', 'POST'], '/customers/edit/{id:[\d]*}', function ($request, $response, $args) {
+        //$customer = [];
+        //$customer_id = (int) $args['id'];
+        $customer_id = $_SESSION['customer_id'];
         //$roles = $this->auth->getRoles();
         $flash_messages = $this->flash->getMessages();
 
-        $customer = $this->customers->getCustomerById($id);
-
+        $customer = $this->customers->getCustomerById($customer_id);
         if ($request->isPost()) {
+        //ddd($customer['username']);
 
-            $customer['username'] = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
             $customer['full_name'] = filter_var($_POST['full_name'], FILTER_SANITIZE_STRING);
+            $customer['username'] = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
             $customer['email'] = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
 
             $customer_form = validateCustomerEditForm($customer);
 
             if ($customer_form['is_valid']) {
                 $this->customers->updateCustomer($customer);
-                $this->flash->addMessage('success', 'User details have been updated');
+                $this->flash->addMessage('success', 'Customer details have been updated');
                 return $response->withRedirect($this->router->pathFor('customers-show'));
             } else {
                 $field_errors = $user_form['has_errors'];
@@ -196,13 +197,58 @@ $app->map(['GET', 'POST'], '/edit/{id:[\d]*}', function ($request, $response, $a
                     'customer' => $customer,
                     //'roles' => $roles,
                     'flash_messages' => $flash_messages,
-                   // 'userLogged' => isset($_SESSION['user_id']),
+                    'customerLogged' => isset($_SESSION['customer_id']),
                     'csrf' => [
                         'name' => $request->getAttribute('csrf_name'),
                         'value' => $request->getAttribute('csrf_value'),
                     ]
         ]);
 })->setName('customers-edit');
+
+
+$app->map(['GET', 'POST'], '/customers/password/change', function ($request, $response, $args) {
+    $fdata = [];
+    $field_errors = [];
+    $flash_messages = $this->flash->getMessages();
+
+    if ($request->isPost()) {
+
+        $fdata['current_password'] = filter_var($_POST['current_password'], FILTER_SANITIZE_STRING);
+        $fdata['new_password'] = filter_var($_POST['new_password'], FILTER_SANITIZE_STRING);
+        $fdata['confirmed_password'] = filter_var($_POST['confirmed_password'], FILTER_SANITIZE_STRING);
+
+        $password_form = validatePasswordForm($fdata);
+
+        if ($password_form['is_valid']) {
+            if ($fdata['new_password'] == $fdata['confirmed_password']) {
+                //$customerService = new CustomerService();
+                $customer = $this->customers->getCustomerById($_SESSION['customer_id']);
+                $errors = $this->customers->changeCustomerPassword($customer['username'], $fdata['current_password'], $fdata['new_password']);
+                if (empty($errors)) {
+                    $this->flash->addMessage('success', 'Password has been changed');
+                    return $response->withRedirect($this->router->pathFor('customers-show'));
+                } else {
+                    $flash_messages['danger'][] = $errors; //
+                }
+            } else {
+                $flash_messages['danger'][] = "Please Confirm the New Passowrd";
+            }
+        } else {
+            $field_errors = $password_form['has_errors'];
+        }
+    }
+
+    return $this->view->render($response, 'customers/customer_password_change.twig', [
+                'customer' => $fdata,
+                'flash_messages' => $flash_messages,
+                'errors' => $field_errors,
+                'customerLogged' => isset($_SESSION['customer_id']),
+                'csrf' => [
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value'),
+                ]
+    ]);
+})->setName('customer-password-change');
 
 
 
