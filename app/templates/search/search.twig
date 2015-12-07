@@ -15,7 +15,7 @@
         <div class="form-group">
             <label for="tag_id">Choose Top 5 Category:</label>
             <select class="form-control" name="tag_id" value="{{ search.tag_id }}">
-                <option value="select"> Select Category </option>
+                <option value="0"> Select Category </option>
                 {% for idx,  tag in tags %}
                     <option value="{{ idx }}" {%if tag == customer.tag %}selected{% endif %}>{{ tag }}</option>
                 {% endfor %}
