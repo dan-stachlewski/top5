@@ -19,6 +19,7 @@ $twig->addGlobal('customerLogged', isset($_SESSION['customer_id']));
 
 //require 'app/src/FormsValidation.php';
 require 'app/src/customersRoutes.php';
+require 'app/src/searchRoutes.php';
 require 'app/src/homeRoutes.php';
 require 'app/src/placesRoutes.php';
 
@@ -52,21 +53,7 @@ $app->get('/', function ($request, $response, $args) {
  * Step 3 - Makse sure the 'page_content' exists in the template like  {{ page_content|raw }}
  *** NOTE *** I wanted to generate links that would take the user to each of the categories and show all for that category however Janusz said this should be for PART B All I need is a login screen for Part A
  */
-$app->get('/top5', function ($request, $response, $args) {
-    
 
-    $tags = $this->places->getTags();    
-    
-    
-    $this->view->render($response, 'search/search.twig', [
-        //'place' => $place,
-        'tags' => $tags,//'docs' => $this->toc,
-        //'flash_messages' => $flash_messages,
-       // 'userLogged' => isset($_SESSION['user_id']),
-        'page_content' => "<h1>Welcome to the Top 5 website.</h1>",
-    ]);
-
-})->setName('search');
 
 
 
