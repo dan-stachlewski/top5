@@ -166,6 +166,43 @@ return $this->view->render($response, 'customers/customer_show.twig', [
         ]);
 })->setName('customers-show');
     
+/* ============ CUSTOMER EDIT ROUTE ============ */
+$app->map(['GET', 'POST'], '/edit/{id:[\d]*}', function ($request, $response, $args) {
+        $customer = [];
+        $id = (int) $args['id'];
+        //$roles = $this->auth->getRoles();
+        $flash_messages = $this->flash->getMessages();
+
+        $customer = $this->customers->getCustomerById($id);
+
+        if ($request->isPost()) {
+
+            $customer['username'] = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+            $customer['full_name'] = filter_var($_POST['full_name'], FILTER_SANITIZE_STRING);
+            $customer['email'] = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
+
+            $customer_form = validateCustomerEditForm($customer);
+
+            if ($customer_form['is_valid']) {
+                $this->customers->updateCustomer($customer);
+                $this->flash->addMessage('success', 'User details have been updated');
+                return $response->withRedirect($this->router->pathFor('customers-show'));
+            } else {
+                $field_errors = $user_form['has_errors'];
+            }
+        }
+
+        return $this->view->render($response, 'customers/customer_edit.twig', [
+                    'customer' => $customer,
+                    //'roles' => $roles,
+                    'flash_messages' => $flash_messages,
+                   // 'userLogged' => isset($_SESSION['user_id']),
+                    'csrf' => [
+                        'name' => $request->getAttribute('csrf_name'),
+                        'value' => $request->getAttribute('csrf_value'),
+                    ]
+        ]);
+})->setName('customers-edit');
 
 
 
