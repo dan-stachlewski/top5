@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="row">
-        <h2>User Details</h2>
+        <h2>Customer Details</h2>
     </div>
 
     <div class="row">
@@ -29,25 +29,16 @@
 
                 <tr>
                     <td>User Name:</td>
-                    <td>{{ user.user_name }}</td>
+                    <td>{{ customer.username }}</td>
                 </tr>
                 <tr>
-                    <td>Full Name:</td>
-                    <td>{{ user.full_name }}</td>
-                </tr>
-                 <tr>
                     <td>Email:</td>
-                    <td>{{ user.email }}</td>
+                    <td>{{ customer.email }}</td>
                 </tr>
-                 <tr>
-                    <td>User Permissions:</td>
-                    <td>{{ user.role }}</td>
-                </tr>
-
             </tbody>
         </table>
     </div>
 
-    <a class="btn btn-success" href="{{ path_for('admin-users-all') }}">Browse All Users</a>
+    <a class="btn btn-success" href="{{ path_for('places-all') }}">Browse All Places</a>
 
 {% endblock %}
