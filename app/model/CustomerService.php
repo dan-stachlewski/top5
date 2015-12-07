@@ -37,6 +37,7 @@ class CustomerService {
 
         $query = "SELECT
                     customers.id AS customer_id,
+                    customers.full_name,
                     customers.username,
                     customers.email,
                     customers.password
@@ -66,6 +67,7 @@ class CustomerService {
         $query = "SELECT
                     customers.id AS customer_id,
                     customers.username,
+                    customers.full_name,
                     customers.email,
                     customers.password
                   FROM
@@ -93,9 +95,9 @@ class CustomerService {
 
     public function addCustomer($customer) {
         $query = "INSERT INTO customers 
-              (username, email, password) 
+              (full_name, username, email, password) 
               VALUES 
-              (:username, :email, :password)";
+              (:full_name, :username, :email, :password)";
         try {
             $stmnt = $this->db->prepare($query);
             $stmnt->bindValue(':username', $customer['username'], PDO::PARAM_STR);
@@ -115,7 +117,8 @@ class CustomerService {
     public function updateCustomer($customer) {
 
         $query = "UPDATE customers 
-                SET username=:username,
+                SET full_name=:full_name
+                username=:username,
                 email=:email,
                 id=:customers_id
             WHERE 
@@ -123,6 +126,7 @@ class CustomerService {
         try {
             $stmnt = $this->db->prepare($query);
 
+            $stmnt->bindValue(':full_name', $customer['full_name'], PDO::PARAM_STR);
             $stmnt->bindValue(':username', $customer['username'], PDO::PARAM_STR);
             $stmnt->bindValue(':email', $customer['email'], PDO::PARAM_STR);
             $stmnt->bindValue(':customers_id', $customer['id'], PDO::PARAM_INT);
@@ -160,6 +164,7 @@ class CustomerService {
 
         $query = "SELECT
                     customers.id AS customer_id,
+                    customers.full_name,
                     customers.username,
                     customers.email,
                     customers.password,
