@@ -40,6 +40,7 @@ $app->map(['GET', 'POST'], '/customers/register', function ($request, $response,
 
     if ($request->isPost()) {
 
+        $customer['full_name'] = filter_var($_POST['full_name'], FILTER_SANITIZE_STRING);
         $customer['username'] = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
         $customer['email'] = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
         $customer['password'] = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
@@ -118,7 +119,7 @@ $app->map(['GET', 'POST'], '/customers/login', function ($request, $response, $a
                 'customer' => $customer,
                 'flash_messages' => $flash_messages,
                 'errors' => $field_errors,
-                'title' => $title,
+                'title' => 'Login',
                 /* ==== THIS EFFECTS WHAT IS SHOWN ON THE CUSTOMERS LOGIN/LOGOUT DROPDOWN MENU ==== */
                 /* ==== REQUIRED IN EVERY ROUTE ==== */
                 'customerLogged' => isset($_SESSION['customer_id']),
@@ -179,17 +180,19 @@ $app->map(['GET', 'POST'], '/customers/edit/{id:[\d]*}', function ($request, $re
         //ddd($customer['username']);
 
             $customer['full_name'] = filter_var($_POST['full_name'], FILTER_SANITIZE_STRING);
-            $customer['username'] = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+            //$customer['username'] = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
             $customer['email'] = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
 
             $customer_form = validateCustomerEditForm($customer);
 
             if ($customer_form['is_valid']) {
+                
                 $this->customers->updateCustomer($customer);
+                
                 $this->flash->addMessage('success', 'Customer details have been updated');
-                return $response->withRedirect($this->router->pathFor('customers-show'));
+                return $response->withRedirect($this->router->pathFor('customers-show', ['id'=>$_SESSION['customer_id']]));
             } else {
-                $field_errors = $user_form['has_errors'];
+                $field_errors = $customer_form['has_errors'];
             }
         }
 
@@ -226,7 +229,7 @@ $app->map(['GET', 'POST'], '/customers/password/change', function ($request, $re
                 $errors = $this->customers->changeCustomerPassword($customer['username'], $fdata['current_password'], $fdata['new_password']);
                 if (empty($errors)) {
                     $this->flash->addMessage('success', 'Password has been changed');
-                    return $response->withRedirect($this->router->pathFor('customers-show'));
+                    return $response->withRedirect($this->router->pathFor('customers-show', ['id'=>$_SESSION['customer_id']]));
                 } else {
                     $flash_messages['danger'][] = $errors; //
                 }
