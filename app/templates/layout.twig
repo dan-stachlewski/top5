@@ -91,7 +91,8 @@
                                                     </li> 
                                                     {% else %}  
                                                     <li>
-                                                        <a href="">Customer Profile</a>
+                                                        <a href="{{ path_for('customers-show', {'id':customer.customer_id}) }}">Customer Profile</a>
+                                                       
                                                     </li>
                                                     <li class="divider"></li>
                                                     <li>
