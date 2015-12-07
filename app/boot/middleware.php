@@ -22,6 +22,8 @@ $app->add(function ($request, $response, $next) use ($app) {
         case $app->router->pathFor('register'):
         case $app->router->pathFor('home'): //root
         case $app->router->pathFor('search'): //start from
+        case $app->router->pathFor('results-all'): //start from
+        //case $app->router->pathFor('results-all'): //start from
             return $next($request, $response); //do not interfere allow passage
             break;
     }
