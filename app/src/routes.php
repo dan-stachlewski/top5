@@ -35,7 +35,7 @@ $app->get('/', function ($request, $response, $args) {
     $tags = $this->places->getTags();    
     
     
-    $this->view->render($response, '/home/part-a/homepage_structure.twig', [
+    $this->view->render($response, 'home/home.twig', [
         //'place' => $place,
         //'tags' => $tags,//'docs' => $this->toc,
         //'flash_messages' => $flash_messages,
@@ -52,13 +52,13 @@ $app->get('/', function ($request, $response, $args) {
  * Step 3 - Makse sure the 'page_content' exists in the template like  {{ page_content|raw }}
  *** NOTE *** I wanted to generate links that would take the user to each of the categories and show all for that category however Janusz said this should be for PART B All I need is a login screen for Part A
  */
-$app->get('/client', function ($request, $response, $args) {
+$app->get('/top5', function ($request, $response, $args) {
     
 
     $tags = $this->places->getTags();    
     
     
-    $this->view->render($response, '/home/part-b/homepage_structure.twig', [
+    $this->view->render($response, 'search/search.twig', [
         //'place' => $place,
         'tags' => $tags,//'docs' => $this->toc,
         //'flash_messages' => $flash_messages,
@@ -66,7 +66,7 @@ $app->get('/client', function ($request, $response, $args) {
         'page_content' => "<h1>Welcome to the Top 5 website.</h1>",
     ]);
 
-})->setName('homepage_b');
+})->setName('search');
 
 
 
