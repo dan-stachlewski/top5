@@ -20,8 +20,8 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Field</th>
-                    <th>Value</th>
+                    <th>Customer Details:</th>
+                    <th>Customer Data:</th>
 
                 </tr>
             </thead>
@@ -37,8 +37,8 @@
                 </tr>
             </tbody>
         </table>
-    </div>
 
+    <a class="btn btn-warning" href="">Edit</a>{#{{ path_for('customers-edit', {id: customer.customerid}) }}#}
     <a class="btn btn-success" href="{{ path_for('places-all') }}">Browse All Places</a>
-
+    </div>
 {% endblock %}
