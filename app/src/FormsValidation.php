@@ -41,7 +41,7 @@ function validateLoginForm($user) {
 
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
 }
-
+*/
 function validatePasswordForm($data) {
     $v = new Validator($data);
 
@@ -50,7 +50,7 @@ function validatePasswordForm($data) {
 
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
 }
-*/
+
 function validateCustomerEditForm($customer) {
     $v = new Validator($customer);
     $v->rule('required', [ 'full_name', 'email', ]);
