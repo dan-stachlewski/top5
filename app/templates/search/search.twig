@@ -4,15 +4,15 @@
     {{ page_content|raw }}
     <form action="{{ path_for('search') }}" method="post">{# {{ path_for('admin-users-edit', {id: user.user_id}) }} #}
 
-        <div class="form-group {% if errors.search %}has-error{% endif %}">
-            <label class="control-label" for="search">Search:</label>
-            <input type="text" class="form-control" name="search" value="{{ search.search }}" placeholder="Search for Top 5 by Suburb or Postcode..."/> 
-            {% if errors.search %}<span class="help-block">{{ errors.search.0 }}</span>{% endif %}
+        <div class="form-group {% if errors.suburb %}has-error{% endif %}">
+            <label class="control-label" for="suburb">Search:</label>
+            <input type="text" class="form-control" name="suburb" value="{{ suburb.suburb }}" placeholder="Search for Top 5 by Suburb or Postcode..."/> 
+            {% if errors.suburb %}<span class="help-block">{{ errors.suburb.0 }}</span>{% endif %}
         </div>
 
         <hr>
 
-        <div class="form-group">
+        <div class="form-group {% if errors.tag_id %}has-error{% endif %}">
             <label for="tag_id">Choose Top 5 Category:</label>
             <select class="form-control" name="tag_id" value="{{ search.tag_id }}">
                 <option value="0"> Select Category </option>
@@ -20,6 +20,7 @@
                     <option value="{{ idx }}" {%if tag == search.tag_id %}selected{% endif %}>{{ tag }}</option>
                 {% endfor %}
             </select>
+            {% if errors.tag_id %}<span class="help-block">{{ errors.tag_id.0 }}</span>{% endif %}
         </div>
 
         <input type="hidden" name="csrf_name" value="{{ csrf.name }}">
