@@ -55,9 +55,9 @@ function validateSearchForm($search) {
     $v = new Validator($search);
 
     $v->rule('required', ['suburb', 'tag_id']);
-    $v->rule('lengthMin', ['suburb'], 2);
+    $v->rule('lengthMin', ['suburb'], 3) ->message('Please enter a min of 3 characters to search by Suburb, Partial Suburb or Postcode.');
     //$v->rule('equals', ['tag_id', 'select']);
-    $v->rule('min', 'tag_id', 0);
+    $v->rule('min', 'tag_id', 1) ->message('Please Choose a Category to Search from.');
 
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
 }
