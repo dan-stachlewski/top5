@@ -6,7 +6,7 @@
 
         <div class="form-group {% if errors.suburb %}has-error{% endif %}">
             <label class="control-label" for="suburb">Search:</label>
-            <input type="text" class="form-control" name="suburb" value="{{ suburb.suburb }}" placeholder="Search for Top 5 by Suburb or Postcode..."/> 
+            <input type="text" class="form-control" name="suburb" value="{{ search.suburb }}" placeholder="Search for Top 5 by Suburb or Postcode..."/> 
             {% if errors.suburb %}<span class="help-block">{{ errors.suburb.0 }}</span>{% endif %}
         </div>
 
