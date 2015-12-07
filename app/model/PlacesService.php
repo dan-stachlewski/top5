@@ -174,7 +174,7 @@ class PlacesService {
     
     public function searchPlaces($search) {
         $where = [];
-      
+        //ddd($search);
         if (isset($search['suburb']))
             $where[] = "places.suburb LIKE :suburb";
         if (isset($search['tag_id']))
