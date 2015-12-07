@@ -1,0 +1,37 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+    {{ page_content|raw }}
+    <form action="{{ path_for('search') }}" method="post">{# {{ path_for('admin-users-edit', {id: user.user_id}) }} #}
+
+        <div class="form-group {% if errors.search %}has-error{% endif %}">
+            <label class="control-label" for="search">Search:</label>
+            <input type="text" class="form-control" name="search" value="{{ search.search }}" placeholder="Search for Top 5 by Suburb or Postcode..."/> 
+            {% if errors.search %}<span class="help-block">{{ errors.search.0 }}</span>{% endif %}
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <label for="tag_id">Choose Top 5 Category:</label>
+            <select class="form-control" name="tag_id" value="{{ search.tag_id }}">
+                <option value="select"> Select Category </option>
+                {% for idx,  tag in tags %}
+                    <option value="{{ idx }}" {%if tag == customer.tag %}selected{% endif %}>{{ tag }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <input type="hidden" name="csrf_name" value="{{ csrf.name }}">
+        <input type="hidden" name="csrf_value" value="{{ csrf.value }}">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-default" href="">Cancel</a> {# {{ path_for('admin-users-all') }} #}
+
+    </form>
+    
+    
+    
+    
+
+
+{% endblock %}
