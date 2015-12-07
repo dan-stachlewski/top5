@@ -83,7 +83,7 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
                 ]);    
            
             } else {
-                $field_errors = $places_form['has_errors'];
+                $field_errors = $search_form['has_errors'];
             }         
          
          
