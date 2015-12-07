@@ -47,7 +47,7 @@ $app->map(['GET', 'POST'], '/customers/register', function ($request, $response,
 
         //ddd($customer);
         $customer_form = validateRegisterForm($customer);
-
+        
         if ($customer_form['is_valid']) {
             //$userService = new AuthService();
             $errors = $this->customers->validateCustomer($customer);
