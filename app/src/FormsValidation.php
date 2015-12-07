@@ -50,9 +50,9 @@ function validatePasswordForm($data) {
 
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
 }
-
-function validateUserEditForm($user) {
-    $v = new Validator($user);
+*/
+function validateCustomerEditForm($customer) {
+    $v = new Validator($customer);
     $v->rule('required', [ 'full_name', 'email', ]);
     $v->rule('lengthMin', ['full_name',], 3);
     $v->rule('email', 'email');
@@ -60,7 +60,7 @@ function validateUserEditForm($user) {
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
 }
 
-*/
+
 
 function validateAddPlaceForm($place) {
     $v = new Validator($place);
