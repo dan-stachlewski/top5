@@ -1,0 +1,36 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <h2>All Search Results</h2>
+    </div>
+
+    {% if results %}
+        <div class="row">
+
+            <table class="table table-striped table-bordered">
+                
+                <tbody>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result.name }}</td>
+                            <td>{{ result.address }}</td>
+                            <td>{{ result.suburb }}</td>
+                            <td>{{ result.postcode}}</td>
+                            <td>{{ result.state }}</td>
+                            <td><a class="btn btn-info" href="{{ path_for('result-show', {id: result.id}) }}">Show</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    {% else %}
+        <div class="row">
+            <h5>No places found</h5>
+        </div>
+    {% endif %}    
+{% endblock %}
