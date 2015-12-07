@@ -20,8 +20,8 @@ $app->add(function ($request, $response, $next) use ($app) {
         case $app->router->pathFor('login'):
         case $app->router->pathFor('logout'):
         case $app->router->pathFor('register'):
-        //case $app->router->pathFor('docs-home'): //start from
         case $app->router->pathFor('home'): //root
+        case $app->router->pathFor('search'): //start from
             return $next($request, $response); //do not interfere allow passage
             break;
     }
