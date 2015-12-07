@@ -171,5 +171,44 @@ class PlacesService {
             exit;
         }
     }
+    
+    public function searchPlaces($search) {
+        $where = [];
+      
+        if (isset($search['suburb']))
+            $where[] = "places.suburb LIKE :suburb";
+        if (isset($search['tag_id']))
+            $where[] = "places.tag_id = :tag_id";
+
+        //ddd(implode(' AND ', $where));
+        
+        $query = "Select
+             places.*
+            From
+                places
+            WHERE  " . implode(' AND ', $where);
+        
+        try {
+            
+            $stmnt = $this->db->prepare($query);
+           
+            if (isset($search['suburb'])) {
+                $stmnt->bindValue(':suburb', $search['suburb'] . '%', PDO::PARAM_STR);
+            }
+            
+            if (isset($search['tag_id'])) {
+                $stmnt->bindValue(':tag_id', $search['tag_id'], PDO::PARAM_INT);
+            }
+
+            $stmnt->execute();
+            $result = $stmnt->fetchAll(PDO::FETCH_ASSOC);
+            $stmnt->closeCursor();
+
+            return $result;
+        } catch (PDOException $e) {
+            exit;
+        }
+    }
+    
 
 }
