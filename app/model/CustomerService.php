@@ -100,6 +100,7 @@ class CustomerService {
               (:full_name, :username, :email, :password)";
         try {
             $stmnt = $this->db->prepare($query);
+            $stmnt->bindValue(':full_name', $customer['full_name'], PDO::PARAM_STR);
             $stmnt->bindValue(':username', $customer['username'], PDO::PARAM_STR);
             $stmnt->bindValue(':email', $customer['email'], PDO::PARAM_STR);
             $stmnt->bindValue(':password', password_hash($customer['password'], PASSWORD_DEFAULT), PDO::PARAM_STR);
@@ -115,22 +116,19 @@ class CustomerService {
     }
 
     public function updateCustomer($customer) {
-
+//ddd($customer);
         $query = "UPDATE
                     customers 
                   SET 
-                    full_name=:full_name,
-                    username=:username,
-                    email=:email,
-                    id=:customer_id
-                WHERE 
-                    (customers.id = :customers_id )";
+                    full_name = :full_name,
+                    email = :email
+                    WHERE 
+                    (customers.id = :customer_id )";
         try {
             $stmnt = $this->db->prepare($query);
             $stmnt->bindValue(':full_name', $customer['full_name'], PDO::PARAM_STR);
-            $stmnt->bindValue(':username', $customer['username'], PDO::PARAM_STR);
             $stmnt->bindValue(':email', $customer['email'], PDO::PARAM_STR);
-            $stmnt->bindValue(':customer_id', $customer['id'], PDO::PARAM_INT);
+            $stmnt->bindValue(':customer_id', $customer['customer_id'], PDO::PARAM_INT);
             $r = $stmnt->execute();
         } catch (PDOException $e) {
             Database::display_db_error($e->getMessage());
