@@ -54,8 +54,8 @@ function validatePasswordForm($data) {
 function validateSearchForm($search) {
     $v = new Validator($search);
 
-    $v->rule('required', ['search', 'tag_id']);
-    $v->rule('lengthMin', ['search'], 2);
+    $v->rule('required', ['suburb', 'tag_id']);
+    $v->rule('lengthMin', ['suburb'], 2);
     //$v->rule('equals', ['tag_id', 'select']);
     $v->rule('min', 'tag_id', 0);
 
