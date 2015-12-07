@@ -52,22 +52,22 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
     //$search['suburb'] = 'foo';
     //$search['tag_id'] = 1;
     $results = [];
-
+    $field_errors = [];
     $flash_messages = $this->flash->getMessages();
     $tags = $this->places->getTags();
   
 
     if ($request->isPost()) {
-         $search['suburb'] = filter_var($_POST['search'], FILTER_SANITIZE_STRING);
+         $search['suburb'] = filter_var($_POST['suburb'], FILTER_SANITIZE_STRING);
          $search['tag_id'] = filter_var($_POST['tag_id'], FILTER_SANITIZE_STRING);
          
          $search_form = validateSearchForm($search);
-
+         //ddd($search_form);
             if ($search_form['is_valid']) {
                 $results = $this->places->searchPlaces($search);
-                $this->flash->addMessage('success', 'Search results have been found');
+                if (empty($errors)) {
                 
-                
+                $this->flash->addMessage('success', 'Search results have been found');                
                 return $this->view->render($response, 'search/results_all.twig', [
                     'results' => $results,
                     'tags' => $tags,
@@ -80,8 +80,11 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
                         'name' => $request->getAttribute('csrf_name'),
                         'value' => $request->getAttribute('csrf_value'),
                     ]
-                ]);    
-           
+                ]);
+   
+            } else {
+                $flash_messages['danger'][] = "You need to enter a Postcode/Suburb & choose Category to search - Please try again!";
+                }
             } else {
                 $field_errors = $search_form['has_errors'];
             }         
@@ -93,6 +96,8 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
     return $this->view->render($response, 'search/search.twig', [
                     'results' => $results,
                     'tags' => $tags,
+                    'flash_messages' => $flash_messages,
+                    'errors' => $field_errors,
                     'title' => 'Search',
 //                    /* ==== THIS EFFECTS WHAT IS SHOWN ON THE CUSTOMERS LOGIN/LOGOUT DROPDOWN MENU ==== */
 //                    /* ==== REQUIRED IN EVERY ROUTE ==== */
