@@ -51,10 +51,21 @@ function validatePasswordForm($data) {
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
 }
 
+function validateSearchForm($search) {
+    $v = new Validator($search);
+
+    $v->rule('required', ['search', 'tag_id']);
+    $v->rule('lengthMin', ['search'], 2);
+    //$v->rule('equals', ['tag_id', 'select']);
+    $v->rule('min', 'tag_id', 0);
+
+    return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
+}
+
 function validateCustomerEditForm($customer) {
     $v = new Validator($customer);
     $v->rule('required', [ 'full_name', 'email', ]);
-    $v->rule('lengthMin', ['full_name',], 3);
+    $v->rule('lengthMin', ['full_name'], 3);
     $v->rule('email', 'email');
     
     return ['is_valid' => $v->validate(), 'has_errors' => $v->errors()];
