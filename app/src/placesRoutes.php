@@ -5,11 +5,12 @@ $app->get('/places', function ($request, $response, $args) {
 
         $places = $this->places->getAllPlaces($_SESSION['customer_id']);
         $flash_messages = $this->flash->getMessages();
-
+        $customer = $this->customers->getCustomerById($_SESSION['customer_id']);
     //ddd($places);
 
     return $this->view->render($response, 'places/places_all.twig', [
                 'places' => $places,
+                'customer' => $customer,
                 'flash_messages' => $flash_messages,
     ]);
 })->setName('places-all');
