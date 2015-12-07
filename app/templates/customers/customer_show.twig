@@ -42,7 +42,7 @@
             </tbody>
         </table>
 
-    <a class="btn btn-warning" href="">Edit</a>{#{{ path_for('customers-edit', {id: customer.customerid}) }}#}
+    <a class="btn btn-warning" href="{{ path_for('customers-edit', {'id':customer.customer_id}) }}">Edit</a>{#{{ path_for('customers-edit', {id: customer.customerid}) }}#}
     <a class="btn btn-success" href="{{ path_for('places-all') }}">Browse All Places</a>
     </div>
 {% endblock %}
