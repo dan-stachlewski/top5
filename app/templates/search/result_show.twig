@@ -1,1 +1,71 @@
-{# empty Twig template #}
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <h2>{{ place.name }} Information</h2>
+    </div>
+    {% if place %}
+    
+    <div class="row">
+            <img src="{{ base_url()}}/images/generic-place-small.png">
+    </div>
+    <div class="row">
+        <table class="table table-striped table-bordered">
+
+            <tbody>
+                <tr>
+                    <td>Place Name:</td>
+                    <td>{{ place.name }}</td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td>{{ place.address }}</td>
+                </tr>
+                <tr>
+                    <td>Suburb:</td>
+                    <td>{{ place.suburb }}</td>
+                </tr>
+                <tr>
+                    <td>Postcode:</td>
+                    <td>{{ place.postcode }}</td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td>{{ place.short }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- 
+            ***
+             * Need to add 
+               - Google Map of the Place Location
+               - Auto Retrieve the:
+                - latitude
+                - longditude
+             * based on the PostCode <-- need to confirm
+             * Populate the:
+                - latitude
+                - longitude
+             * automatically
+         -->
+            <div class="well">
+
+                <h2>{{ result.name }} Google Map:</h2>
+                
+                <!-- Google Map goes here... -->
+
+            </div>
+
+            <div class="well">
+                <a class="btn btn-primary" href="{{ path_for('search') }}">Return to Search</a>
+            </div>
+    </div>
+    {% else %}
+            <div class="well">
+                <h5>No Data found for {{ place.name }}</h5>
+                <a class="btn btn-primary" href="{{ path_for('search')}}">Return to Search</a>
+            </div>
+    {% endif %}  
+{% endblock %}
