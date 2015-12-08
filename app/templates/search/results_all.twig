@@ -19,6 +19,7 @@
                             <td>{{ result.suburb }}</td>
                             <td>{{ result.postcode}}</td>
                             <td>{{ result.state }}</td>
+                            {# <td>{{ result.all_displays }}</td> #}
                             <td><a class="btn btn-info" href="{{ path_for('result-show', {'id':result.id})}}">Show</a>
                             </td>
 {#                            <td><a class="btn btn-info" href="{{ path_for('result-show', {'id':place.place_id})}}">Show</a>
@@ -28,13 +29,13 @@
 
                 </tbody>
             </table>
-        <a class="btn btn-default" href="{{ path_for('search') }}">Cancel</a> 
+        <a class="btn btn-warning" href="{{ path_for('search') }}">Return to Search</a> 
 
         </div>
     {% else %}
         <div class="row">
             <h5>No places found</h5>
-            <a class="btn btn-default" href="{{ path_for('search') }}">Cancel</a> 
+            <a class="btn btn-default" href="{{ path_for('search') }}">Return to Search</a> 
         </div>
     {% endif %}    
 {% endblock %}
