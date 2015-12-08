@@ -17,7 +17,7 @@
             <select class="form-control" name="tag_id" value="{{ search.tag_id }}">
                 <option value="0"> Select Category </option>
                 {% for idx,  tag in tags %}
-                    <option value="{{ idx }}" {%if tag == search.tag_id %}selected{% endif %}>{{ tag }}</option>
+                    <option value="{{ idx }}" {%if idx == search.tag_id %}selected{% endif %}>{{ tag }}</option>
                 {% endfor %}
             </select>
             {% if errors.tag_id %}<span class="help-block">{{ errors.tag_id.0 }}</span>{% endif %}
