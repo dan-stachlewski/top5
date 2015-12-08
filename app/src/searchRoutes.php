@@ -66,12 +66,19 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
             if ($search_form['is_valid']) {
                 $results = $this->places->searchPlaces($search);
                 if (empty($errors)) {
-                
-                $this->flash->addMessage('success', 'Search results have been found');                
+                //ddd($results);
+                //$this->flash->addMessage('success', 'Search results have been found');  
+                    if ($results) {
+                        $flash_messages['success'][] = 'Search results have been found';
+                    } else {
+                        $flash_messages['danger'][] = 'No Search results have been found';
+                    }
+                    //d($flash_messages);
                 return $this->view->render($response, 'search/results_all.twig', [
+                    'search' => $search,
                     'results' => $results,
                     'tags' => $tags,
-                    'title' => 'Search',
+                    'title' => 'Search Results',
                     'flash_messages' => $flash_messages,
 //                    /* ==== THIS EFFECTS WHAT IS SHOWN ON THE CUSTOMERS LOGIN/LOGOUT DROPDOWN MENU ==== */
 //                    /* ==== REQUIRED IN EVERY ROUTE ==== */
@@ -88,12 +95,12 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
             } else {
                 $field_errors = $search_form['has_errors'];
             }         
-         
-         
-         
     }//END ->isPost()
   //ddd($results);
+    //d($search);
     return $this->view->render($response, 'search/search.twig', [
+        
+                    'search' => $search,
                     'results' => $results,
                     'tags' => $tags,
                     'flash_messages' => $flash_messages,
@@ -108,6 +115,33 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
                     ]
         ]);    
 })->setName('search');
+
+$app->get('search/result/{id:[\d]*}', function ($request, $response, $args) {
+    $place_id = (int) $args['id'];
+    
+    //ddd($place_id);
+    //$place_id = 1;
+    $place = $this->places->getPlacesById($place_id);
+    //ddd($place_id);
+
+    $tags = $this->places->getTags();
+    //ddd($place);
+
+    $flash_messages = $this->flash->getMessages();
+
+    
+return $this->view->render($response, 'search/result_show.twig', [
+                'place' => $place,
+                'tags' => $tags,
+                'flash_messages' => $flash_messages,
+                //'errors' => $field_errors,
+                //'userLogged' => isset($_SESSION['user_id']),
+                'csrf' => [
+                    'name' => $request->getAttribute('csrf_name'),
+                    'value' => $request->getAttribute('csrf_value'),
+                ]
+        ]);
+})->setName('result-show');
 
 
 
