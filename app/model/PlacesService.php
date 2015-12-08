@@ -209,6 +209,50 @@ class PlacesService {
             exit;
         }
     }
+
+    public function incrementDisplayCounters($places) {
+       //$this->incrementCounter('all_displays', 1);
+       //ddd($places);
+       foreach($places as $place) {
+            $this->incrementCounter('all_displays', $place['id']);
+            $this->incrementCounter('displays_after_last_bill', $place['id']);
+       }
+        
+    }
+    
+    public function incrementClicksCounters($place_id) {
+       //$this->incrementCounter('all_displays', 1);
+       //ddd($places);
+
+            $this->incrementCounter('all_clicks', $place_id);
+            $this->incrementCounter('clicks_after_last_bill', $place_id);
+        
+    }
+    
+    
+    public function incrementCounter($field_name, $place_id) {
+            //getPlacesById($place_id);
+        //update places set`all_displays`= `all_displays` + 1 where `id` = 1
+                //ddd($place);
+        $query = "UPDATE
+                    places 
+                  SET 
+                   `{$field_name}` =  `{$field_name}` + 1
+                  WHERE 
+                    (places.id = :place_id )";
+        try {
+            $stmnt = $this->db->prepare($query);
+            $stmnt->bindValue(':place_id', $place_id, PDO::PARAM_INT);
+            
+            //$stmnt->bindValue(':field_name', $field_name, PDO::PARAM_STR);
+            $r = $stmnt->execute();
+        } catch (PDOException $e) {
+            Database::display_db_error($e->getMessage());
+        }
+    }    
+    
     
 
 }
+
+//update places set`all_displays`= `all_displays` + 1 where `id` = 1 
