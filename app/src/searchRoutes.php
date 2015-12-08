@@ -54,6 +54,7 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
     $results = [];
     $field_errors = [];
     $flash_messages = $this->flash->getMessages();
+    //$field_name = 'all_displays';
     $tags = $this->places->getTags();
   
 
@@ -65,6 +66,8 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
          //ddd($search_form);
             if ($search_form['is_valid']) {
                 $results = $this->places->searchPlaces($search);
+                //ddd($results);
+                $counter = $this->places->incrementDisplayCounters($results); //$field_name,
                 if (empty($errors)) {
                 //ddd($results);
                 //$this->flash->addMessage('success', 'Search results have been found');  
@@ -75,6 +78,7 @@ $app->map(['GET', 'POST'], '/search', function ($request, $response, $args) {
                     }
                     //d($flash_messages);
                 return $this->view->render($response, 'search/results_all.twig', [
+                    'counter' => $counter,
                     'search' => $search,
                     'results' => $results,
                     'tags' => $tags,
@@ -123,6 +127,7 @@ $app->get('search/result/{id:[\d]*}', function ($request, $response, $args) {
     //$place_id = 1;
     $place = $this->places->getPlacesById($place_id);
     //ddd($place_id);
+    $counter = $this->places->incrementClicksCounters($place_id); //$field_name,
 
     $tags = $this->places->getTags();
     //ddd($place);
@@ -131,6 +136,7 @@ $app->get('search/result/{id:[\d]*}', function ($request, $response, $args) {
 
     
 return $this->view->render($response, 'search/result_show.twig', [
+                'counter' => $counter,
                 'place' => $place,
                 'tags' => $tags,
                 'flash_messages' => $flash_messages,
