@@ -161,6 +161,7 @@ $app->map(['GET', 'POST'], 'places/edit/{id:[\d]*}', function ($request, $respon
         }
 
         return $this->view->render($response, 'places/places_delete.twig', [
+                    'title' => 'Delecte Customer Place',
                     'place' => $place,
                     'OK_link' => $OK_link,
                     'flash_messages' => $flash_messages,
