@@ -18,3 +18,4 @@ db  :
 application:
     doc_path : 'home'
     doc_index_file : 'index.yaml'
+    img_path : '/images/places'
