@@ -84,8 +84,12 @@ class PlacesService {
                     places.address,
                     places.suburb,
                     places.postcode,
+                    places.img,
+                    places.lat,
+                    places.lng,
                     tags.id as tag_id,
                     tags.short
+                    
                   FROM
                     tags INNER JOIN
                     places On places.tag_id = tags.id
