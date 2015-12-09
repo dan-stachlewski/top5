@@ -9,6 +9,7 @@ $app->get('/places', function ($request, $response, $args) {
     //ddd($places);
 
     return $this->view->render($response, 'places/places_all.twig', [
+                'title' => 'All Customer Places',
                 'places' => $places,
                 'customer' => $customer,
                 'flash_messages' => $flash_messages,
@@ -66,8 +67,13 @@ $app->get('places/show/{id:[\d]*}', function ($request, $response, $args) {
     $place_id = (int) $args['id'];
     //$place_id = 1;
     $place = $this->places->getPlacesById($place_id);
-    //ddd($place_id);
-
+    //ddd($place);
+    //ddd($this->application);
+    
+    $a = $this->application;
+    
+    $imgFile = "{$a['img_path']}/{$place['img']}";
+    
     
    
     $tags = $this->places->getTags();
@@ -77,8 +83,10 @@ $app->get('places/show/{id:[\d]*}', function ($request, $response, $args) {
 
     
 return $this->view->render($response, 'places/places_show.twig', [
+
                 'place' => $place,
                 'tags' => $tags,
+                'imgFile' => $imgFile,
                 'flash_messages' => $flash_messages,
                 //'errors' => $field_errors,
                 //'userLogged' => isset($_SESSION['user_id']),
@@ -123,6 +131,7 @@ $app->map(['GET', 'POST'], 'places/edit/{id:[\d]*}', function ($request, $respon
         }
 
         return $this->view->render($response, 'places/places_edit.twig', [
+                'title' => 'All Customer Places',
                 'place' => $place,
                 'tags' => $tags,
                 'flash_messages' => $flash_messages,
